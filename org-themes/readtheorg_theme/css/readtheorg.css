@@ -412,9 +412,21 @@ pre.src{
 }
 
 .mermaid{
-    overflow-x:auto;
+    overflow:hidden;
     margin-bottom:24px;
-    text-align:center;
+    border:1px solid #e1e4e5;
+    height:60vh;
+    max-height:600px;
+    cursor:grab;
+}
+
+.mermaid:active{
+    cursor:grabbing;
+}
+
+.mermaid svg{
+    width:100% !important;
+    height:100% !important;
 }
 
 table{

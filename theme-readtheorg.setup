@@ -8,3 +8,4 @@
 #+HTML_HEAD: <script type="text/javascript" src="./org-themes/lib/js/jquery.stickytableheaders.min.js"></script>
 #+HTML_HEAD: <script type="text/javascript" src="./org-themes/readtheorg_theme/js/readtheorg.js"></script>
 #+HTML_HEAD: <script type="text/javascript" src="./org-themes/lib/js/mermaid.min.js"></script>
+#+HTML_HEAD: <script type="text/javascript" src="./org-themes/lib/js/svg-pan-zoom.min.js"></script>

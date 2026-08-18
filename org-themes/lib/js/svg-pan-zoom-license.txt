@@ -1,0 +1,1 @@
+svg-pan-zoom v3.6.2 — https://github.com/bumbu/svg-pan-zoom — BSD-2-Clause License

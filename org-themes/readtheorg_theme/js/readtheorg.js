@@ -105,7 +105,22 @@ $( document ).ready(function() {
             $pre.replaceWith($diagram);
         });
         mermaid.initialize({startOnLoad: false, theme: 'default'});
-        mermaid.run({querySelector: '.mermaid'});
+        mermaid.run({querySelector: '.mermaid'}).then(function () {
+            // mermaid.js only draws a static SVG; svg-pan-zoom adds the
+            // scroll-to-zoom / drag-to-pan interaction and the on-diagram
+            // zoom controls.
+            if (typeof svgPanZoom === 'undefined') return;
+            $('.mermaid svg').each(function () {
+                svgPanZoom(this, {
+                    zoomEnabled: true,
+                    controlIconsEnabled: true,
+                    fit: true,
+                    center: true,
+                    minZoom: 0.2,
+                    maxZoom: 15
+                });
+            });
+        });
     }
 });
 
