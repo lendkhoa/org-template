@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2026-08-17 Mon 23:24 -->
+<!-- 2026-08-18 Tue 10:53 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Untitled</title>
@@ -199,6 +199,7 @@
 <script type="text/javascript" src="./org-themes/lib/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="./org-themes/lib/js/jquery.stickytableheaders.min.js"></script>
 <script type="text/javascript" src="./org-themes/readtheorg_theme/js/readtheorg.js"></script>
+<script type="text/javascript" src="./org-themes/lib/js/mermaid.min.js"></script>
 </head>
 <body>
 <div id="content" class="content">
@@ -207,12 +208,12 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#org41d0985">1. First section&#xa0;&#xa0;&#xa0;<span class="tag"><span class="dfkjsd">dfkjsd</span></span></a></li>
+<li><a href="#orgde9ec60">1. First section</a></li>
 </ul>
 </div>
 </div>
-<div id="outline-container-org41d0985" class="outline-2">
-<h2 id="org41d0985"><span class="section-number-2">1.</span> First section&#xa0;&#xa0;&#xa0;<span class="tag"><span class="dfkjsd">dfkjsd</span></span></h2>
+<div id="outline-container-orgde9ec60" class="outline-2">
+<h2 id="orgde9ec60"><span class="section-number-2">1.</span> First section</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 Start writing here.
@@ -220,6 +221,39 @@ Start writing here.
 
 <div class="org-src-container">
 <pre class="src src-python"><span style="color: #F92672;">print</span><span style="color: #AE81FF;">(</span><span style="color: #E6DB74;">'Hello, world'</span><span style="color: #AE81FF;">)</span>
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-mermaid">flowchart TD
+  User(["👤 Customer"])
+
+  subgraph Site["🌐 KEI Website"]
+      Frontend["Product Pages &amp; Search"]
+      Search["🔍 Search Engine/Filter by specs &amp; part number"]
+      Cart["🛒 Quote Cart &amp; Build &amp; submit RFQ"]
+  end
+
+  subgraph Backend["⚙️ Backend"]
+      API["Data &amp; Business Logic Pricing · Inventory · Accounts"]
+  end
+
+  ERP(["ERP Live Stock &amp; Pricing"])
+
+  User --&gt;|"searches for parts"| Frontend
+  Frontend --&gt;|"parametric filters"| Search
+  Search --&gt;|"matching results"| Frontend
+  Frontend --&gt;|"adds items"| Cart
+  Cart --&gt;|"submits quote request"| API
+  API --&gt;|"confirms availability &amp; price"| Cart
+  ERP --&gt;|"syncs inventory &amp; pricing"| API
+
+  style User fill:#e0f2fe,stroke:#0284c7,color:#0c4a6e
+  style Frontend fill:#dbeafe,stroke:#2563eb,color:#1e3a8a
+  style Search fill:#dcfce7,stroke:#16a34a,color:#14532d
+  style Cart fill:#dbeafe,stroke:#2563eb,color:#1e3a8a
+  style API fill:#ede9fe,stroke:#7c3aed,color:#3b0764
+  style ERP fill:#fef9c3,stroke:#ca8a04,color:#713f12
 </pre>
 </div>
 
@@ -251,7 +285,7 @@ Start writing here.
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Khoa Le</p>
-<p class="date">Created: 2026-08-17 Mon 23:24</p>
+<p class="date">Created: 2026-08-18 Tue 10:53</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

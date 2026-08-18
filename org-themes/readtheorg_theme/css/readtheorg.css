@@ -63,7 +63,7 @@ body{
     height:100%;
     margin-left:300px;
     /* margin:auto; */
-    max-width:800px;
+    max-width:calc(100% - 4em);
     min-height:100%;
     padding:1.618em 3.236em;
     transition:margin-left 0.25s ease;
@@ -325,11 +325,35 @@ code{
 */
 .codeblock,pre.src,#content .literal-block{
     border:1px solid #3e3d32;
-    padding:12px;
+    padding:36px 12px 12px 12px;
     overflow-x:auto;
     background:#272822;
     color:#f8f8f2;
-    margin:1px 0 24px 0}
+    margin:1px 0 24px 0;
+    position:relative}
+
+.copy-code-btn{
+    position:absolute;
+    top:8px;
+    right:8px;
+    z-index:1;
+    background:rgba(255,255,255,0.08);
+    border:1px solid #3e3d32;
+    border-radius:4px;
+    color:#f8f8f2;
+    cursor:pointer;
+    font-family:"Lato","proxima-nova","Helvetica Neue",Arial,sans-serif;
+    font-size:11px;
+    line-height:1;
+    padding:4px 8px;
+    opacity:0.6;
+    transition:opacity 0.15s ease, background-color 0.15s ease;
+}
+
+.copy-code-btn:hover{
+    opacity:1;
+    background:rgba(255,255,255,0.16);
+}
 
 pre.src{
     color:#f8f8f2;
@@ -385,6 +409,12 @@ pre.src{
     line-height: 1.5;
     margin-bottom:24px;
     padding:12px;
+}
+
+.mermaid{
+    overflow-x:auto;
+    margin-bottom:24px;
+    text-align:center;
 }
 
 table{

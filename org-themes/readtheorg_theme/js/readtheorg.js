@@ -92,6 +92,61 @@ $( document ).ready(function() {
     });
 });
 
+$( document ).ready(function() {
+    // Org exports `#+begin_src mermaid ... #+end_src` as a plain
+    // `<pre class="src src-mermaid">` code block. Lift its raw text into
+    // the `<div class="mermaid">` container mermaid.js looks for, then
+    // render it.
+    var $mermaidBlocks = $('pre.src-mermaid');
+    if ($mermaidBlocks.length && typeof mermaid !== 'undefined') {
+        $mermaidBlocks.each(function () {
+            var $pre = $(this);
+            var $diagram = $('<div class="mermaid"></div>').text($pre.text());
+            $pre.replaceWith($diagram);
+        });
+        mermaid.initialize({startOnLoad: false, theme: 'default'});
+        mermaid.run({querySelector: '.mermaid'});
+    }
+});
+
+$( document ).ready(function() {
+    // Add a "Copy" button to the top-right of every code block. Runs after
+    // the mermaid pass above, so blocks already converted into diagrams
+    // are skipped automatically.
+    function fallbackCopy(text) {
+        var $tmp = $('<textarea readonly></textarea>')
+            .val(text)
+            .css({position: 'fixed', top: '-1000px', left: '-1000px'});
+        $('body').append($tmp);
+        $tmp[0].select();
+        try { document.execCommand('copy'); } catch (e) {}
+        $tmp.remove();
+    }
+
+    $('pre.src, .codeblock, #content .literal-block').each(function () {
+        var $block = $(this);
+        var $btn = $('<button type="button" class="copy-code-btn">Copy</button>');
+        $block.prepend($btn);
+
+        $btn.on('click', function () {
+            var code = $block.clone().find('.copy-code-btn').remove().end().text();
+            var onDone = function () {
+                $btn.text('Copied!');
+                setTimeout(function () { $btn.text('Copy'); }, 1500);
+            };
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(code).then(onDone, function () {
+                    fallbackCopy(code);
+                    onDone();
+                });
+            } else {
+                fallbackCopy(code);
+                onDone();
+            }
+        });
+    });
+});
+
 window.SphinxRtdTheme = (function (jquery) {
     var stickyNav = (function () {
         var navBar,

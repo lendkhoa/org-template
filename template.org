@@ -10,6 +10,38 @@ Start writing here.
   print('Hello, world')
 #+end_src
 
+#+begin_src mermaid
+  flowchart TD
+    User(["👤 Customer"])
+
+    subgraph Site["🌐 KEI Website"]
+        Frontend["Product Pages & Search"]
+        Search["🔍 Search Engine/Filter by specs & part number"]
+        Cart["🛒 Quote Cart & Build & submit RFQ"]
+    end
+
+    subgraph Backend["⚙️ Backend"]
+        API["Data & Business Logic Pricing · Inventory · Accounts"]
+    end
+
+    ERP(["ERP Live Stock & Pricing"])
+
+    User -->|"searches for parts"| Frontend
+    Frontend -->|"parametric filters"| Search
+    Search -->|"matching results"| Frontend
+    Frontend -->|"adds items"| Cart
+    Cart -->|"submits quote request"| API
+    API -->|"confirms availability & price"| Cart
+    ERP -->|"syncs inventory & pricing"| API
+
+    style User fill:#e0f2fe,stroke:#0284c7,color:#0c4a6e
+    style Frontend fill:#dbeafe,stroke:#2563eb,color:#1e3a8a
+    style Search fill:#dcfce7,stroke:#16a34a,color:#14532d
+    style Cart fill:#dbeafe,stroke:#2563eb,color:#1e3a8a
+    style API fill:#ede9fe,stroke:#7c3aed,color:#3b0764
+    style ERP fill:#fef9c3,stroke:#ca8a04,color:#713f12
+#+end_src
+
 
 #+BEGIN_EXPORT html
 <script src="https://cdn.jsdelivr.net/npm/darkmode-js@1.5.7/lib/darkmode-js.min.js"></script>
