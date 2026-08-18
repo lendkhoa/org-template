@@ -1,0 +1,43 @@
+#+TITLE: org-template
+
+Starter template for exporting Org-mode files to HTML with a customized
+readtheorg theme. Copy this folder wherever a new note needs styled HTML
+export.
+
+* Structure
+
+| Path                                        | Purpose                                             |
+|----------------------------------------------+------------------------------------------------------|
+| =template.org=                              | Starter file: standard preamble + SETUPFILE include |
+| =theme-readtheorg.setup=                    | HTML_HEAD include: wires up all CSS/JS below        |
+| =org-themes/lib/js/=                        | jquery, bootstrap, stickytableheaders (theme deps)  |
+| =org-themes/readtheorg_theme/css/=          | =htmlize.css= (syntax colors), =readtheorg.css= (layout) |
+| =org-themes/readtheorg_theme/js/=           | =readtheorg.js= (TOC behavior)                       |
+
+=template.html= is a generated export, kept only as a working example —
+regenerate it, don't hand-edit it.
+
+* Customizations vs. the stock readtheorg theme
+
+- *Collapsible TOC sidebar*: a hamburger button toggles the left
+  table-of-contents; state persists per-browser via =localStorage=
+  (=readtheorg.css= / =readtheorg.js=).
+- *Legible code blocks*: =pre.src=/=.codeblock= always render with a dark
+  (Monokai-matching) background, since Org's exported syntax-highlight
+  colors are baked in as inline styles tuned for a dark background
+  (=readtheorg.css=).
+- *Page-wide dark mode toggle*: =template.org= embeds the [[https://github.com/sun0225SUN/darkmode-js][darkmode-js]]
+  CDN widget (bottom-right button) for toggling the whole page between
+  light/dark.
+
+* Usage
+
+1. Copy this folder to the new note's location.
+2. Rename/edit =template.org= (update =#+TITLE=, write content).
+3. Export to HTML in Emacs: =C-c C-e h h=, or from the shell:
+   #+begin_src sh
+     emacs --batch template.org -f org-html-export-to-html
+   #+end_src
+
+All paths in =theme-readtheorg.setup= are relative to the =.org= file, so
+keep the =org-themes/= folder alongside it.
