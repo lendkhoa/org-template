@@ -6,7 +6,7 @@ function collapse_toc_elements_on_click (nav_li_a){
       states.  The active attribute is documented in bootstrap.
       https://getbootstrap.com/docs/4.0/components/navbar/#nav
     */
-    $(nav_li_el).parent().toggleClass("active");
+    $(nav_li_a).parent().toggleClass("active");
 }
 
 $( document ).ready(function() {
@@ -83,12 +83,36 @@ $( document ).ready(function() {
 
     // auto-collapse after following a TOC link on narrow screens
     $tableOfContents.on('click', 'a', function () {
+        // expand any collapsed section(s) the target heading lives in,
+        // otherwise the browser would jump to a `display:none' element
+        var hash = this.getAttribute('href');
+        if (hash && hash.charAt(0) === '#' && hash.length > 1) {
+            $(hash).parents('[id^="outline-container-"]').removeClass('section-collapsed');
+        }
+
         if ($(window).width() <= 768) {
             $body.addClass('sidebar-collapsed');
             if (window.localStorage) {
                 localStorage.setItem(TOC_STORAGE_KEY, 'true');
             }
         }
+    });
+});
+
+$( document ).ready(function() {
+    // Make each headline section collapsible: clicking a heading toggles
+    // everything under its outline container (the prose + any nested
+    // sub-sections), which org-html-export emits as later siblings of the
+    // heading inside the same `outline-N' div.
+    $('#content [id^="outline-container-"]').each(function () {
+        var $section = $(this);
+        var $heading = $section.children('h1, h2, h3, h4, h5, h6').first();
+        if (!$heading.length) return;
+
+        $heading.addClass('section-toggle-heading').prepend('<span class="section-toggle">&#9662;</span>');
+        $heading.on('click', function () {
+            $section.toggleClass('section-collapsed');
+        });
     });
 });
 

@@ -429,6 +429,31 @@ pre.src{
     height:100% !important;
 }
 
+.section-toggle-heading{
+    cursor:pointer;
+    user-select:none;
+}
+
+.section-toggle{
+    display:inline-block;
+    margin-right:0.3em;
+    font-size:0.7em;
+    color:#2980B9;
+    transition:transform 0.15s ease;
+}
+
+[id^="outline-container-"].section-collapsed{
+    margin-bottom:24px;
+}
+
+[id^="outline-container-"].section-collapsed > *:not(:first-child){
+    display:none;
+}
+
+[id^="outline-container-"].section-collapsed > *:first-child .section-toggle{
+    transform:rotate(-90deg);
+}
+
 table{
     border-collapse:collapse;
     border-spacing:0;
