@@ -13,9 +13,12 @@ export.
 | =org-themes/lib/js/=                        | jquery, bootstrap, stickytableheaders (theme deps)  |
 | =org-themes/readtheorg_theme/css/=          | =htmlize.css= (syntax colors), =readtheorg.css= (layout) |
 | =org-themes/readtheorg_theme/js/=           | =readtheorg.js= (TOC behavior)                       |
+| =Makefile=                                  | =make export= builds all =.org= files into =html/=  |
+| =html/=                                     | Generated output: exported HTML + a copy of =org-themes/= alongside it |
+| =.github/workflows/deploy.yml=              | CI: exports and deploys =html/= to Cloudflare Pages on push to =main= |
 
-=template.html= is a generated export, kept only as a working example —
-regenerate it, don't hand-edit it.
+=html/= is generated output — regenerate it with =make export=, don't
+hand-edit anything inside it.
 
 * Customizations vs. the stock readtheorg theme
 
@@ -34,10 +37,56 @@ regenerate it, don't hand-edit it.
 
 1. Copy this folder to the new note's location.
 2. Rename/edit =template.org= (update =#+TITLE=, write content).
-3. Export to HTML in Emacs: =C-c C-e h h=, or from the shell:
-   #+begin_src sh
-     emacs --batch template.org -f org-html-export-to-html
-   #+end_src
+3. Export to HTML:
+   - All files at once: =make export= — finds every =.org= file (skipping
+     =org-themes/=), exports each with Emacs, and collects the results plus
+     a copy of =org-themes/= into =html/= so the CSS/JS paths still resolve.
+   - =make clean= removes =html/=.
+   - A single file, without the Makefile: =C-c C-e h h= in Emacs, or from
+     the shell:
+     #+begin_src sh
+       emacs --batch template.org -f org-html-export-to-html
+     #+end_src
 
 All paths in =theme-readtheorg.setup= are relative to the =.org= file, so
-keep the =org-themes/= folder alongside it.
+keep the =org-themes/= folder alongside it when exporting by hand.
+
+* Deployment (Cloudflare Pages + GitHub SSO)
+
+Pushing to =main= runs =.github/workflows/deploy.yml=, which exports the
+site (=make export=) and deploys =html/= to Cloudflare Pages. The site
+sits behind Cloudflare Access, gated by GitHub login, so only approved
+GitHub accounts can view it.
+
+** One-time Cloudflare setup
+
+1. *Create the Pages project* (Cloudflare dashboard → Workers & Pages →
+   Create → Pages → "Direct Upload", or via =wrangler pages project
+   create=). Name it to match =projectName:= in the workflow (defaults to
+   =org-template=).
+2. *Create an API token* (My Profile → API Tokens → Create Token) using
+   the "Edit Cloudflare Pages" template, scoped to the account that owns
+   the project.
+3. *Add GitHub repo secrets* (Settings → Secrets and variables → Actions):
+   - =CLOUDFLARE_API_TOKEN= — the token from step 2.
+   - =CLOUDFLARE_ACCOUNT_ID= — found on the Cloudflare dashboard's right
+     sidebar (Workers & Pages overview).
+4. *Enable Zero Trust* on the account if not already (dashboard prompts
+   you to pick a team name on first visit to Zero Trust — free tier
+   covers small teams).
+5. *Add GitHub as an identity provider* (Zero Trust → Settings →
+   Authentication → Login methods → Add → GitHub): create a GitHub OAuth
+   App (Settings → Developer settings → OAuth Apps → New OAuth App) with
+   the Authorization callback URL Cloudflare shows on this screen, then
+   paste the Client ID/Secret back into Cloudflare.
+6. *Add an Access application* (Zero Trust → Access → Applications → Add
+   an application → Self-hosted) pointing at the Pages domain
+   (=<project>.pages.dev=, or your custom domain). Set the login method
+   to GitHub only.
+7. *Add an Access policy* on that application allowing only specific
+   GitHub identities — e.g. an "Allow" rule with rule type "GitHub
+   Organization" or "Emails" matching the GitHub account(s) that should
+   have access.
+
+Once configured, every push to =main= redeploys automatically; visiting
+the site prompts a GitHub login and only approved accounts get through.

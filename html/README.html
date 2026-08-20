@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2026-08-19 Wed 23:05 -->
+<!-- 2026-08-19 Wed 23:31 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>org-template</title>
@@ -201,9 +201,14 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#orgb0ab3bd">1. Structure</a></li>
-<li><a href="#orgbe22900">2. Customizations vs. the stock readtheorg theme</a></li>
-<li><a href="#org73feb62">3. Usage</a></li>
+<li><a href="#org9366f22">1. Structure</a></li>
+<li><a href="#orgc7639f0">2. Customizations vs. the stock readtheorg theme</a></li>
+<li><a href="#org6880653">3. Usage</a></li>
+<li><a href="#org20c66f9">4. Deployment (Cloudflare Pages + GitHub SSO)</a>
+<ul>
+<li><a href="#orgfb0c4f3">4.1. One-time Cloudflare setup</a></li>
+</ul>
+</li>
 </ul>
 </div>
 </div>
@@ -212,8 +217,8 @@ Starter template for exporting Org-mode files to HTML with a customized
 readtheorg theme. Copy this folder wherever a new note needs styled HTML
 export.
 </p>
-<div id="outline-container-orgb0ab3bd" class="outline-2">
-<h2 id="orgb0ab3bd"><span class="section-number-2">1.</span> Structure</h2>
+<div id="outline-container-org9366f22" class="outline-2">
+<h2 id="org9366f22"><span class="section-number-2">1.</span> Structure</h2>
 <div class="outline-text-2" id="text-1">
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
@@ -254,17 +259,32 @@ export.
 <td class="org-left"><code>org-themes/readtheorg_theme/js/</code></td>
 <td class="org-left"><code>readtheorg.js</code> (TOC behavior)</td>
 </tr>
+
+<tr>
+<td class="org-left"><code>Makefile</code></td>
+<td class="org-left"><code>make export</code> builds all <code>.org</code> files into <code>html/</code></td>
+</tr>
+
+<tr>
+<td class="org-left"><code>html/</code></td>
+<td class="org-left">Generated output: exported HTML + a copy of <code>org-themes/</code> alongside it</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>.github/workflows/deploy.yml</code></td>
+<td class="org-left">CI: exports and deploys <code>html/</code> to Cloudflare Pages on push to <code>main</code></td>
+</tr>
 </tbody>
 </table>
 
 <p>
-<code>template.html</code> is a generated export, kept only as a working example —
-regenerate it, don't hand-edit it.
+<code>html/</code> is generated output — regenerate it with <code>make export</code>, don't
+hand-edit anything inside it.
 </p>
 </div>
 </div>
-<div id="outline-container-orgbe22900" class="outline-2">
-<h2 id="orgbe22900"><span class="section-number-2">2.</span> Customizations vs. the stock readtheorg theme</h2>
+<div id="outline-container-orgc7639f0" class="outline-2">
+<h2 id="orgc7639f0"><span class="section-number-2">2.</span> Customizations vs. the stock readtheorg theme</h2>
 <div class="outline-text-2" id="text-2">
 <ul class="org-ul">
 <li><b>Collapsible TOC sidebar</b>: a hamburger button toggles the left
@@ -280,31 +300,91 @@ light/dark.</li>
 </ul>
 </div>
 </div>
-<div id="outline-container-org73feb62" class="outline-2">
-<h2 id="org73feb62"><span class="section-number-2">3.</span> Usage</h2>
+<div id="outline-container-org6880653" class="outline-2">
+<h2 id="org6880653"><span class="section-number-2">3.</span> Usage</h2>
 <div class="outline-text-2" id="text-3">
 <ol class="org-ol">
 <li>Copy this folder to the new note's location.</li>
 <li>Rename/edit <code>template.org</code> (update <code>#+TITLE</code>, write content).</li>
+<li>Export to HTML:
+<ul class="org-ul">
+<li>All files at once: <code>make export</code> — finds every <code>.org</code> file (skipping
+<code>org-themes/</code>), exports each with Emacs, and collects the results plus
+a copy of <code>org-themes/</code> into <code>html/</code> so the CSS/JS paths still resolve.</li>
+<li><code>make clean</code> removes <code>html/</code>.</li>
 <li><p>
-Export to HTML in Emacs: <code>C-c C-e h h</code>, or from the shell:
+A single file, without the Makefile: <code>C-c C-e h h</code> in Emacs, or from
+the shell:
 </p>
 <div class="org-src-container">
 <pre class="src src-sh">emacs --batch template.org -f org-html-export-to-html
 </pre>
 </div></li>
+</ul></li>
 </ol>
 
 <p>
 All paths in <code>theme-readtheorg.setup</code> are relative to the <code>.org</code> file, so
-keep the <code>org-themes/</code> folder alongside it.
+keep the <code>org-themes/</code> folder alongside it when exporting by hand.
 </p>
+</div>
+</div>
+<div id="outline-container-org20c66f9" class="outline-2">
+<h2 id="org20c66f9"><span class="section-number-2">4.</span> Deployment (Cloudflare Pages + GitHub SSO)</h2>
+<div class="outline-text-2" id="text-4">
+<p>
+Pushing to <code>main</code> runs <code>.github/workflows/deploy.yml</code>, which exports the
+site (<code>make export</code>) and deploys <code>html/</code> to Cloudflare Pages. The site
+sits behind Cloudflare Access, gated by GitHub login, so only approved
+GitHub accounts can view it.
+</p>
+</div>
+<div id="outline-container-orgfb0c4f3" class="outline-3">
+<h3 id="orgfb0c4f3"><span class="section-number-3">4.1.</span> One-time Cloudflare setup</h3>
+<div class="outline-text-3" id="text-4-1">
+<ol class="org-ol">
+<li><b>Create the Pages project</b> (Cloudflare dashboard → Workers &amp; Pages →
+Create → Pages → "Direct Upload", or via <code>wrangler pages project
+   create</code>). Name it to match <code>projectName:</code> in the workflow (defaults to
+<code>org-template</code>).</li>
+<li><b>Create an API token</b> (My Profile → API Tokens → Create Token) using
+the "Edit Cloudflare Pages" template, scoped to the account that owns
+the project.</li>
+<li><b>Add GitHub repo secrets</b> (Settings → Secrets and variables → Actions):
+<ul class="org-ul">
+<li><code>CLOUDFLARE_API_TOKEN</code> — the token from step 2.</li>
+<li><code>CLOUDFLARE_ACCOUNT_ID</code> — found on the Cloudflare dashboard's right
+sidebar (Workers &amp; Pages overview).</li>
+</ul></li>
+<li><b>Enable Zero Trust</b> on the account if not already (dashboard prompts
+you to pick a team name on first visit to Zero Trust — free tier
+covers small teams).</li>
+<li><b>Add GitHub as an identity provider</b> (Zero Trust → Settings →
+Authentication → Login methods → Add → GitHub): create a GitHub OAuth
+App (Settings → Developer settings → OAuth Apps → New OAuth App) with
+the Authorization callback URL Cloudflare shows on this screen, then
+paste the Client ID/Secret back into Cloudflare.</li>
+<li><b>Add an Access application</b> (Zero Trust → Access → Applications → Add
+an application → Self-hosted) pointing at the Pages domain
+(<code>&lt;project&gt;.pages.dev</code>, or your custom domain). Set the login method
+to GitHub only.</li>
+<li><b>Add an Access policy</b> on that application allowing only specific
+GitHub identities — e.g. an "Allow" rule with rule type "GitHub
+Organization" or "Emails" matching the GitHub account(s) that should
+have access.</li>
+</ol>
+
+<p>
+Once configured, every push to <code>main</code> redeploys automatically; visiting
+the site prompts a GitHub login and only approved accounts get through.
+</p>
+</div>
 </div>
 </div>
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Khoa Le</p>
-<p class="date">Created: 2026-08-19 Wed 23:05</p>
+<p class="date">Created: 2026-08-19 Wed 23:31</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

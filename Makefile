@@ -15,6 +15,7 @@ help:
 export: $(HTML_FILES)
 	@mkdir -p $(EXPORT_DIR)
 	@mv $(HTML_FILES) $(EXPORT_DIR)/
+	@rm -rf $(EXPORT_DIR)/$(ASSETS_DIR)
 	@cp -R $(ASSETS_DIR) $(EXPORT_DIR)/$(ASSETS_DIR)
 	@echo "Exported $(words $(HTML_FILES)) file(s) to $(EXPORT_DIR)/"
 
