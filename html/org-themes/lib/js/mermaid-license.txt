@@ -1,0 +1,1 @@
+mermaid.js v10.9.8 — https://github.com/mermaid-js/mermaid — MIT License
