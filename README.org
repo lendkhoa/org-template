@@ -54,18 +54,21 @@ keep the =org-themes/= folder alongside it when exporting by hand.
 * Deployment (Cloudflare Workers Git integration + GitHub SSO)
 
 The Cloudflare dashboard's "Create a Worker" → "Import a repository" flow
-builds and deploys straight from GitHub — no separate CI config in this
-repo. Point it at =lendkhoa/org-template= and use:
+deploys straight from GitHub — no separate CI config in this repo. Point
+it at =lendkhoa/org-template= and use:
 
-- *Build command*: =apt-get update && apt-get install -y emacs-nox && make export=
-  (installs Emacs in Cloudflare's build container, then runs =make
-  export= to turn the =.org= sources into =html/=).
+- *Build command*: leave empty. Cloudflare's build container runs as a
+  non-root user with no =apt-get= access, so Emacs can't be installed
+  there — =make export= has to happen locally instead (see Usage above).
 - *Deploy command*: =npx wrangler deploy= (default). Reads =wrangler.toml=
   at the repo root, which declares =html/= as the static assets
   directory and =org-template= as the Worker/project name.
 
-Every push to the connected branch (=main=) triggers a Cloudflare build
-using these commands — no GitHub Actions workflow involved.
+Because there's no build step, =html/= must be regenerated and *committed*
+locally (=make export=, then =git add html/=) before pushing — Cloudflare
+only deploys whatever is already checked into =html/= at the pushed
+commit. Every push to the connected branch (=main=) triggers a redeploy
+of that content — no GitHub Actions workflow involved.
 
 ** One-time Cloudflare setup
 

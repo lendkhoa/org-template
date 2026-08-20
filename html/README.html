@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2026-08-20 Thu 14:53 -->
+<!-- 2026-08-20 Thu 14:56 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>org-template</title>
@@ -201,12 +201,12 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#orgf0b1a48">1. Structure</a></li>
-<li><a href="#orge258805">2. Customizations vs. the stock readtheorg theme</a></li>
-<li><a href="#orgc8e29b8">3. Usage</a></li>
-<li><a href="#org5c280f2">4. Deployment (Cloudflare Workers Git integration + GitHub SSO)</a>
+<li><a href="#org7681e2c">1. Structure</a></li>
+<li><a href="#orgc92373d">2. Customizations vs. the stock readtheorg theme</a></li>
+<li><a href="#org55ccfbc">3. Usage</a></li>
+<li><a href="#org4e82ec8">4. Deployment (Cloudflare Workers Git integration + GitHub SSO)</a>
 <ul>
-<li><a href="#orgb566e0c">4.1. One-time Cloudflare setup</a></li>
+<li><a href="#org9e18ddc">4.1. One-time Cloudflare setup</a></li>
 </ul>
 </li>
 </ul>
@@ -217,8 +217,8 @@ Starter template for exporting Org-mode files to HTML with a customized
 readtheorg theme. Copy this folder wherever a new note needs styled HTML
 export.
 </p>
-<div id="outline-container-orgf0b1a48" class="outline-2">
-<h2 id="orgf0b1a48"><span class="section-number-2">1.</span> Structure</h2>
+<div id="outline-container-org7681e2c" class="outline-2">
+<h2 id="org7681e2c"><span class="section-number-2">1.</span> Structure</h2>
 <div class="outline-text-2" id="text-1">
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
@@ -283,8 +283,8 @@ hand-edit anything inside it.
 </p>
 </div>
 </div>
-<div id="outline-container-orge258805" class="outline-2">
-<h2 id="orge258805"><span class="section-number-2">2.</span> Customizations vs. the stock readtheorg theme</h2>
+<div id="outline-container-orgc92373d" class="outline-2">
+<h2 id="orgc92373d"><span class="section-number-2">2.</span> Customizations vs. the stock readtheorg theme</h2>
 <div class="outline-text-2" id="text-2">
 <ul class="org-ul">
 <li><b>Collapsible TOC sidebar</b>: a hamburger button toggles the left
@@ -300,8 +300,8 @@ light/dark.</li>
 </ul>
 </div>
 </div>
-<div id="outline-container-orgc8e29b8" class="outline-2">
-<h2 id="orgc8e29b8"><span class="section-number-2">3.</span> Usage</h2>
+<div id="outline-container-org55ccfbc" class="outline-2">
+<h2 id="org55ccfbc"><span class="section-number-2">3.</span> Usage</h2>
 <div class="outline-text-2" id="text-3">
 <ol class="org-ol">
 <li>Copy this folder to the new note's location.</li>
@@ -329,31 +329,34 @@ keep the <code>org-themes/</code> folder alongside it when exporting by hand.
 </p>
 </div>
 </div>
-<div id="outline-container-org5c280f2" class="outline-2">
-<h2 id="org5c280f2"><span class="section-number-2">4.</span> Deployment (Cloudflare Workers Git integration + GitHub SSO)</h2>
+<div id="outline-container-org4e82ec8" class="outline-2">
+<h2 id="org4e82ec8"><span class="section-number-2">4.</span> Deployment (Cloudflare Workers Git integration + GitHub SSO)</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 The Cloudflare dashboard's "Create a Worker" → "Import a repository" flow
-builds and deploys straight from GitHub — no separate CI config in this
-repo. Point it at <code>lendkhoa/org-template</code> and use:
+deploys straight from GitHub — no separate CI config in this repo. Point
+it at <code>lendkhoa/org-template</code> and use:
 </p>
 
 <ul class="org-ul">
-<li><b>Build command</b>: <code>apt-get update &amp;&amp; apt-get install -y emacs-nox &amp;&amp; make export</code>
-(installs Emacs in Cloudflare's build container, then runs <code>make
-  export</code> to turn the <code>.org</code> sources into <code>html/</code>).</li>
+<li><b>Build command</b>: leave empty. Cloudflare's build container runs as a
+non-root user with no <code>apt-get</code> access, so Emacs can't be installed
+there — <code>make export</code> has to happen locally instead (see Usage above).</li>
 <li><b>Deploy command</b>: <code>npx wrangler deploy</code> (default). Reads <code>wrangler.toml</code>
 at the repo root, which declares <code>html/</code> as the static assets
 directory and <code>org-template</code> as the Worker/project name.</li>
 </ul>
 
 <p>
-Every push to the connected branch (<code>main</code>) triggers a Cloudflare build
-using these commands — no GitHub Actions workflow involved.
+Because there's no build step, <code>html/</code> must be regenerated and <b>committed</b>
+locally (<code>make export</code>, then <code>git add html/</code>) before pushing — Cloudflare
+only deploys whatever is already checked into <code>html/</code> at the pushed
+commit. Every push to the connected branch (<code>main</code>) triggers a redeploy
+of that content — no GitHub Actions workflow involved.
 </p>
 </div>
-<div id="outline-container-orgb566e0c" class="outline-3">
-<h3 id="orgb566e0c"><span class="section-number-3">4.1.</span> One-time Cloudflare setup</h3>
+<div id="outline-container-org9e18ddc" class="outline-3">
+<h3 id="org9e18ddc"><span class="section-number-3">4.1.</span> One-time Cloudflare setup</h3>
 <div class="outline-text-3" id="text-4-1">
 <ol class="org-ol">
 <li><b>Run the wizard</b> (Workers &amp; Pages → Create → Import a repository),
@@ -383,7 +386,7 @@ the site prompts a GitHub login and only approved accounts get through.
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Khoa Le</p>
-<p class="date">Created: 2026-08-20 Thu 14:53</p>
+<p class="date">Created: 2026-08-20 Thu 14:56</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
