@@ -15,7 +15,7 @@ export.
 | =org-themes/readtheorg_theme/js/=           | =readtheorg.js= (TOC behavior)                       |
 | =Makefile=                                  | =make export= builds all =.org= files into =html/=  |
 | =html/=                                     | Generated output: exported HTML + a copy of =org-themes/= alongside it |
-| =.github/workflows/deploy.yml=              | CI: exports and deploys =html/= to Cloudflare Pages on push to =main= |
+| =wrangler.toml=                             | Tells Cloudflare's Worker build to serve static assets from =html/= |
 
 =html/= is generated output — regenerate it with =make export=, don't
 hand-edit anything inside it.
@@ -51,42 +51,39 @@ hand-edit anything inside it.
 All paths in =theme-readtheorg.setup= are relative to the =.org= file, so
 keep the =org-themes/= folder alongside it when exporting by hand.
 
-* Deployment (Cloudflare Pages + GitHub SSO)
+* Deployment (Cloudflare Workers Git integration + GitHub SSO)
 
-Pushing to =main= runs =.github/workflows/deploy.yml=, which exports the
-site (=make export=) and deploys =html/= to Cloudflare Pages. The site
-sits behind Cloudflare Access, gated by GitHub login, so only approved
-GitHub accounts can view it.
+The Cloudflare dashboard's "Create a Worker" → "Import a repository" flow
+builds and deploys straight from GitHub — no separate CI config in this
+repo. Point it at =lendkhoa/org-template= and use:
+
+- *Build command*: =apt-get update && apt-get install -y emacs-nox && make export=
+  (installs Emacs in Cloudflare's build container, then runs =make
+  export= to turn the =.org= sources into =html/=).
+- *Deploy command*: =npx wrangler deploy= (default). Reads =wrangler.toml=
+  at the repo root, which declares =html/= as the static assets
+  directory and =org-template= as the Worker/project name.
+
+Every push to the connected branch (=main=) triggers a Cloudflare build
+using these commands — no GitHub Actions workflow involved.
 
 ** One-time Cloudflare setup
 
-1. *Create the Pages project* (Cloudflare dashboard → Workers & Pages →
-   Create → Pages → "Direct Upload", or via =wrangler pages project
-   create=). Name it to match =projectName:= in the workflow (defaults to
-   =org-template=).
-2. *Create an API token* (My Profile → API Tokens → Create Token) using
-   the "Edit Cloudflare Pages" template, scoped to the account that owns
-   the project.
-3. *Add GitHub repo secrets* (Settings → Secrets and variables → Actions):
-   - =CLOUDFLARE_API_TOKEN= — the token from step 2.
-   - =CLOUDFLARE_ACCOUNT_ID= — found on the Cloudflare dashboard's right
-     sidebar (Workers & Pages overview).
-4. *Enable Zero Trust* on the account if not already (dashboard prompts
-   you to pick a team name on first visit to Zero Trust — free tier
-   covers small teams).
-5. *Add GitHub as an identity provider* (Zero Trust → Settings →
+1. *Run the wizard* (Workers & Pages → Create → Import a repository),
+   selecting =lendkhoa/org-template= and entering the build/deploy
+   commands above.
+2. *Protect with Cloudflare Access*: the wizard has a "Protect with
+   Cloudflare Access" toggle — enable it. If prompted, pick a Zero Trust
+   team name (free tier covers small teams).
+3. *Add GitHub as an identity provider* (Zero Trust → Settings →
    Authentication → Login methods → Add → GitHub): create a GitHub OAuth
-   App (Settings → Developer settings → OAuth Apps → New OAuth App) with
-   the Authorization callback URL Cloudflare shows on this screen, then
-   paste the Client ID/Secret back into Cloudflare.
-6. *Add an Access application* (Zero Trust → Access → Applications → Add
-   an application → Self-hosted) pointing at the Pages domain
-   (=<project>.pages.dev=, or your custom domain). Set the login method
-   to GitHub only.
-7. *Add an Access policy* on that application allowing only specific
-   GitHub identities — e.g. an "Allow" rule with rule type "GitHub
-   Organization" or "Emails" matching the GitHub account(s) that should
-   have access.
+   App (GitHub → Settings → Developer settings → OAuth Apps → New OAuth
+   App) using the Authorization callback URL Cloudflare shows on this
+   screen, then paste the Client ID/Secret back into Cloudflare.
+4. *Set the Access policy* on the application Cloudflare created for
+   this project (Zero Trust → Access → Applications) to GitHub login
+   only, with an Allow rule limited to the specific GitHub identities
+   (or GitHub org) that should have access.
 
 Once configured, every push to =main= redeploys automatically; visiting
 the site prompts a GitHub login and only approved accounts get through.
