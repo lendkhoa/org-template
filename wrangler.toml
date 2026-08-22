@@ -1,5 +1,6 @@
 name = "org-template"
 compatibility_date = "2026-08-20"
+preview_urls = false
 
 [assets]
 directory = "html"
