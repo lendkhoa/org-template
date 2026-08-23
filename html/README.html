@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2026-08-22 Sat 22:21 -->
+<!-- 2026-08-22 Sat 23:04 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>org-template</title>
@@ -193,6 +193,35 @@
     { background-color: #ffff00; color: #000000; font-weight: bold; }
   .org-svg { }
 </style>
+<link rel="stylesheet" type="text/css" href="./org-themes/readtheorg_theme/css/htmlize.css"/>
+<link rel="stylesheet" type="text/css" href="./org-themes/readtheorg_theme/css/readtheorg.css"/>
+<script type="text/javascript" src="./org-themes/lib/js/jquery.min.js"></script>
+<script type="text/javascript" src="./org-themes/lib/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="./org-themes/lib/js/jquery.stickytableheaders.min.js"></script>
+<script type="text/javascript" src="./org-themes/readtheorg_theme/js/readtheorg.js"></script>
+<script type="text/javascript" src="./org-themes/lib/js/mermaid.min.js"></script>
+<script type="text/javascript" src="./org-themes/lib/js/svg-pan-zoom.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/darkmode-js@1.5.7/lib/darkmode-js.min.js"></script>
+<script>
+function addDarkmodeWidget() {
+const options = {
+bottom: '64px', // default: '32px'
+right: '32px', // default: '32px'
+left: 'unset', // default: 'unset'
+time: '0.5s', // default: '0.3s'
+mixColor: '#fff', // default: '#fff'
+backgroundColor: '#fff',  // default: '#fff'
+buttonColorDark: '#100f2c',  // default: '#100f2c'
+buttonColorLight: '#fff', // default: '#fff'
+saveInCookies: false, // default: true,
+label: '🌓', // default: ''
+autoMatchOsTheme: true // default: true
+}
+const darkmode = new Darkmode(options);
+darkmode.showWidget();
+}
+window.addEventListener('load', addDarkmodeWidget);
+</script>
 </head>
 <body>
 <div id="content" class="content">
@@ -201,12 +230,12 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#org69016ba">1. Structure</a></li>
-<li><a href="#org4b360e9">2. Customizations vs. the stock readtheorg theme</a></li>
-<li><a href="#org55e9943">3. Usage</a></li>
-<li><a href="#orgfe12929">4. Deployment (Cloudflare Workers Git integration + GitHub SSO)</a>
+<li><a href="#org1783acb">1. Structure</a></li>
+<li><a href="#org24130cc">2. Customizations vs. the stock readtheorg theme</a></li>
+<li><a href="#org2f6d224">3. Usage</a></li>
+<li><a href="#org423cf6e">4. Deployment (Cloudflare Workers Git integration + GitHub SSO)</a>
 <ul>
-<li><a href="#org3b04e94">4.1. One-time Cloudflare setup</a></li>
+<li><a href="#org74953ad">4.1. One-time Cloudflare setup</a></li>
 </ul>
 </li>
 </ul>
@@ -217,8 +246,8 @@ Starter template for exporting Org-mode files to HTML with a customized
 readtheorg theme. Copy this folder wherever a new note needs styled HTML
 export.
 </p>
-<div id="outline-container-org69016ba" class="outline-2">
-<h2 id="org69016ba"><span class="section-number-2">1.</span> Structure</h2>
+<div id="outline-container-org1783acb" class="outline-2">
+<h2 id="org1783acb"><span class="section-number-2">1.</span> Structure</h2>
 <div class="outline-text-2" id="text-1">
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
@@ -283,8 +312,8 @@ hand-edit anything inside it.
 </p>
 </div>
 </div>
-<div id="outline-container-org4b360e9" class="outline-2">
-<h2 id="org4b360e9"><span class="section-number-2">2.</span> Customizations vs. the stock readtheorg theme</h2>
+<div id="outline-container-org24130cc" class="outline-2">
+<h2 id="org24130cc"><span class="section-number-2">2.</span> Customizations vs. the stock readtheorg theme</h2>
 <div class="outline-text-2" id="text-2">
 <ul class="org-ul">
 <li><b>Collapsible TOC sidebar</b>: a hamburger button toggles the left
@@ -300,8 +329,8 @@ light/dark.</li>
 </ul>
 </div>
 </div>
-<div id="outline-container-org55e9943" class="outline-2">
-<h2 id="org55e9943"><span class="section-number-2">3.</span> Usage</h2>
+<div id="outline-container-org2f6d224" class="outline-2">
+<h2 id="org2f6d224"><span class="section-number-2">3.</span> Usage</h2>
 <div class="outline-text-2" id="text-3">
 <ol class="org-ol">
 <li>Copy this folder to the new note's location.</li>
@@ -329,8 +358,8 @@ keep the <code>org-themes/</code> folder alongside it when exporting by hand.
 </p>
 </div>
 </div>
-<div id="outline-container-orgfe12929" class="outline-2">
-<h2 id="orgfe12929"><span class="section-number-2">4.</span> Deployment (Cloudflare Workers Git integration + GitHub SSO)</h2>
+<div id="outline-container-org423cf6e" class="outline-2">
+<h2 id="org423cf6e"><span class="section-number-2">4.</span> Deployment (Cloudflare Workers Git integration + GitHub SSO)</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 The Cloudflare dashboard's "Create a Worker" → "Import a repository" flow
@@ -355,8 +384,8 @@ commit. Every push to the connected branch (<code>main</code>) triggers a redepl
 of that content — no GitHub Actions workflow involved.
 </p>
 </div>
-<div id="outline-container-org3b04e94" class="outline-3">
-<h3 id="org3b04e94"><span class="section-number-3">4.1.</span> One-time Cloudflare setup</h3>
+<div id="outline-container-org74953ad" class="outline-3">
+<h3 id="org74953ad"><span class="section-number-3">4.1.</span> One-time Cloudflare setup</h3>
 <div class="outline-text-3" id="text-4-1">
 <ol class="org-ol">
 <li><b>Run the wizard</b> (Workers &amp; Pages → Create → Import a repository),
@@ -386,7 +415,7 @@ the site prompts a GitHub login and only approved accounts get through.
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Khoa Le</p>
-<p class="date">Created: 2026-08-22 Sat 22:21</p>
+<p class="date">Created: 2026-08-22 Sat 23:04</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

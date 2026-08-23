@@ -56,6 +56,8 @@ body{
     margin:0;
     min-height:100%;
     overflow-x:hidden;
+    overflow-wrap:break-word;
+    word-wrap:break-word;
 }
 
 #content{
@@ -223,6 +225,8 @@ dl dd{
 }
 
 @media only screen and (max-width: 480px){
+    #content{
+        padding:1em}
 }
 
 @media screen and (max-width: 768px){
@@ -240,9 +244,7 @@ dl dd{
 
 @media screen and (max-width: 768px){
     #content{
-        margin-left:0}
-
-    #content #content{
+        margin-left:0;
         padding:1.618em}
 
     #content.shift{
@@ -325,17 +327,20 @@ code{
 */
 .codeblock,pre.src,#content .literal-block{
     border:1px solid #3e3d32;
-    padding:36px 12px 12px 12px;
-    overflow-x:auto;
+    padding:12px 44px 12px 12px;
     background:#272822;
     color:#f8f8f2;
     margin:1px 0 24px 0;
-    position:relative}
+    position:relative;
+    white-space:pre-wrap;
+    word-break:break-word;
+    overflow-wrap:break-word;}
 
 .copy-code-btn{
     position:absolute;
-    top:8px;
+    top:50%;
     right:8px;
+    transform:translateY(-50%);
     z-index:1;
     background:rgba(255,255,255,0.08);
     border:1px solid #3e3d32;
@@ -362,9 +367,10 @@ pre.src{
     font-size:12px;
     line-height:1.5;
     margin:1px 0px 24px 0px;
-    overflow:auto;
     padding:12px;
-    white-space:pre;
+    white-space:pre-wrap;
+    word-break:break-word;
+    overflow-wrap:break-word;
 }
 
 /* Syntax-highlight classes from htmlize.css are tuned for a light
@@ -409,6 +415,9 @@ pre.src{
     line-height: 1.5;
     margin-bottom:24px;
     padding:12px;
+    white-space:pre-wrap;
+    word-break:break-word;
+    overflow-wrap:break-word;
 }
 
 .mermaid{
@@ -454,13 +463,22 @@ pre.src{
     transform:rotate(-90deg);
 }
 
+/* display:block turns the table into a plain scroll container for wide
+   tables. Setting overflow-x alone on a display:table element is a known
+   cross-browser trap: the UA computes overflow-y as auto too, and the
+   table's row groups can end up clipped/hidden inside that box instead of
+   just scrolling sideways. block avoids that entirely. */
 table{
+    display:block;
     border-collapse:collapse;
     border-spacing:0;
     empty-cells:show;
     margin-left:auto;
     margin-right:auto;
     margin-bottom:24px;
+    max-width:100%;
+    overflow-x:auto;
+    -webkit-overflow-scrolling:touch;
     border-bottom:1px solid #e1e4e5;
 }
 
@@ -552,6 +570,26 @@ body.sidebar-collapsed #sidebar-toggle {
 }
 
 @media screen and (max-width: 768px) {
+    /* Off-canvas by default below the tablet breakpoint, so the 300px TOC
+       doesn't cover the page (and the toggle button isn't pushed
+       off-screen) before readtheorg.js has run to apply its own
+       collapsed-by-default logic. */
+    #table-of-contents {
+        transform:translateX(-100%);
+    }
+
+    body:not(.sidebar-collapsed) #table-of-contents {
+        transform:translateX(0);
+    }
+
+    #sidebar-toggle {
+        left:0;
+    }
+
+    body:not(.sidebar-collapsed) #sidebar-toggle {
+        left:min(300px, 85vw);
+    }
+
     #copyright, #postamble {
         display: none;
     }

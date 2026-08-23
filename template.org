@@ -41,29 +41,3 @@ Start writing here.
     style API fill:#ede9fe,stroke:#7c3aed,color:#3b0764
     style ERP fill:#fef9c3,stroke:#ca8a04,color:#713f12
 #+end_src
-
-
-#+BEGIN_EXPORT html
-<script src="https://cdn.jsdelivr.net/npm/darkmode-js@1.5.7/lib/darkmode-js.min.js"></script>
-<script>
-    const options = {
-    bottom: '64px', // default: '32px'
-    right: '32px', // default: '32px'
-    left: 'unset', // default: 'unset'
-    time: '0.5s', // default: '0.3s'
-    mixColor: '#fff', // default: '#fff'
-    backgroundColor: '#fff',  // default: '#fff'
-    buttonColorDark: '#100f2c',  // default: '#100f2c'
-    buttonColorLight: '#fff', // default: '#fff'
-    saveInCookies: false, // default: true,
-    label: '🌓', // default: ''
-    autoMatchOsTheme: true // default: true
-    }
-
-    const darkmode = new Darkmode(options);
-    function addDarkmodeWidget() {
-      darkmode.showWidget();
-    }
-    window.addEventListener('load', addDarkmodeWidget);
-</script>
-#+END_EXPORT

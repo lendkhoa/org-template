@@ -9,3 +9,25 @@
 #+HTML_HEAD: <script type="text/javascript" src="./org-themes/readtheorg_theme/js/readtheorg.js"></script>
 #+HTML_HEAD: <script type="text/javascript" src="./org-themes/lib/js/mermaid.min.js"></script>
 #+HTML_HEAD: <script type="text/javascript" src="./org-themes/lib/js/svg-pan-zoom.min.js"></script>
+
+#+HTML_HEAD: <script src="https://cdn.jsdelivr.net/npm/darkmode-js@1.5.7/lib/darkmode-js.min.js"></script>
+#+HTML_HEAD: <script>
+#+HTML_HEAD:     function addDarkmodeWidget() {
+#+HTML_HEAD:       const options = {
+#+HTML_HEAD:       bottom: '64px', // default: '32px'
+#+HTML_HEAD:       right: '32px', // default: '32px'
+#+HTML_HEAD:       left: 'unset', // default: 'unset'
+#+HTML_HEAD:       time: '0.5s', // default: '0.3s'
+#+HTML_HEAD:       mixColor: '#fff', // default: '#fff'
+#+HTML_HEAD:       backgroundColor: '#fff',  // default: '#fff'
+#+HTML_HEAD:       buttonColorDark: '#100f2c',  // default: '#100f2c'
+#+HTML_HEAD:       buttonColorLight: '#fff', // default: '#fff'
+#+HTML_HEAD:       saveInCookies: false, // default: true,
+#+HTML_HEAD:       label: '🌓', // default: ''
+#+HTML_HEAD:       autoMatchOsTheme: true // default: true
+#+HTML_HEAD:       }
+#+HTML_HEAD:       const darkmode = new Darkmode(options);
+#+HTML_HEAD:       darkmode.showWidget();
+#+HTML_HEAD:     }
+#+HTML_HEAD:     window.addEventListener('load', addDarkmodeWidget);
+#+HTML_HEAD: </script>
