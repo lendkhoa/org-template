@@ -1,3 +1,6 @@
+#+SEQ_TODO:   TODO(t) INPROGRESS(i) WAITING(w@) | DONE(d) CANCELED(c@)
+#+TAGS: @legal(l)
+#+SETUPFILE: ./theme-readtheorg.setup
 #+TITLE: org-template
 
 Starter template for exporting Org-mode files to HTML with a customized
