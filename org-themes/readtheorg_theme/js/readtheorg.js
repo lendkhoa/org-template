@@ -64,14 +64,25 @@ $( document ).ready(function() {
     var $tableOfContents = $('#table-of-contents');
     $tableOfContents.css({paddingBottom: $postamble.outerHeight()});
 
-    // add a persistent button that toggles the TOC sidebar open/closed
+    // The TOC is a floating overlay drawer at every viewport width: a
+    // persistent hamburger button toggles it open/closed, a dimmed backdrop
+    // sits behind it, and it's closed by default so #content always gets
+    // the full screen until the reader asks for the drawer.
     var TOC_STORAGE_KEY = 'org-toc-collapsed';
     var $body = $('body');
     var $sidebarToggle = $('<div id="sidebar-toggle" title="Toggle table of contents">&#9776;</div>');
-    $body.append($sidebarToggle);
+    var $sidebarBackdrop = $('<div id="sidebar-backdrop"></div>');
+    $body.append($sidebarBackdrop, $sidebarToggle);
+
+    function closeSidebar() {
+        $body.addClass('sidebar-collapsed');
+        if (window.localStorage) {
+            localStorage.setItem(TOC_STORAGE_KEY, 'true');
+        }
+    }
 
     var storedState = window.localStorage ? localStorage.getItem(TOC_STORAGE_KEY) : null;
-    var startCollapsed = storedState === null ? $(window).width() <= 768 : storedState === 'true';
+    var startCollapsed = storedState === null ? true : storedState === 'true';
     $body.toggleClass('sidebar-collapsed', startCollapsed);
 
     $sidebarToggle.on('click', function () {
@@ -81,7 +92,10 @@ $( document ).ready(function() {
         }
     });
 
-    // auto-collapse after following a TOC link on narrow screens
+    // Click the dimmed empty screen behind the open drawer to close it.
+    $sidebarBackdrop.on('click', closeSidebar);
+
+    // auto-collapse after following a TOC link
     $tableOfContents.on('click', 'a', function () {
         // expand any collapsed section(s) the target heading lives in,
         // otherwise the browser would jump to a `display:none' element
@@ -90,12 +104,7 @@ $( document ).ready(function() {
             $(hash).parents('[id^="outline-container-"]').removeClass('section-collapsed');
         }
 
-        if ($(window).width() <= 768) {
-            $body.addClass('sidebar-collapsed');
-            if (window.localStorage) {
-                localStorage.setItem(TOC_STORAGE_KEY, 'true');
-            }
-        }
+        closeSidebar();
     });
 });
 

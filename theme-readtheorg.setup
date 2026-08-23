@@ -24,10 +24,18 @@
 #+HTML_HEAD:       buttonColorLight: '#fff', // default: '#fff'
 #+HTML_HEAD:       saveInCookies: false, // default: true,
 #+HTML_HEAD:       label: '🌓', // default: ''
-#+HTML_HEAD:       autoMatchOsTheme: true // default: true
+#+HTML_HEAD:       autoMatchOsTheme: false // default: true; dark is the default regardless of OS theme
 #+HTML_HEAD:       }
 #+HTML_HEAD:       const darkmode = new Darkmode(options);
 #+HTML_HEAD:       darkmode.showWidget();
+#+HTML_HEAD:       // darkmode.toggle() drives a different (buggy) code path than a
+#+HTML_HEAD:       // real click: it skips the "expanded" class that squares off the
+#+HTML_HEAD:       // reveal layer's border-radius, leaving a 100%-sized circle that
+#+HTML_HEAD:       // renders as an oval inscribed in the viewport. Clicking the
+#+HTML_HEAD:       // actual button runs the same listener a user click would.
+#+HTML_HEAD:       if (!darkmode.isActivated()) {
+#+HTML_HEAD:         document.querySelector('.darkmode-toggle').click();
+#+HTML_HEAD:       }
 #+HTML_HEAD:     }
 #+HTML_HEAD:     window.addEventListener('load', addDarkmodeWidget);
 #+HTML_HEAD: </script>
