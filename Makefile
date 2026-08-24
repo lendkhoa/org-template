@@ -22,8 +22,15 @@ export: $(HTML_FILES)
 	@if [ ! -f $(EXPORT_DIR)/index.html ] && [ -f $(EXPORT_DIR)/$(INDEX_SRC) ]; then cp $(EXPORT_DIR)/$(INDEX_SRC) $(EXPORT_DIR)/index.html; fi
 	@echo "Exported $(words $(HTML_FILES)) file(s) to $(EXPORT_DIR)/"
 
+# `emacs --batch` loads no init file, so htmlize (syntax coloring) isn't on
+# the load-path by default -- load the vendored copy explicitly. Its default
+# 'inline-css output mode also needs to resolve real theme colors from a
+# display frame, which doesn't exist in batch mode; 'css mode sidesteps that
+# by emitting class names keyed against the static colors in htmlize.css.
 %.html: %.org
-	emacs --batch $< -f org-html-export-to-html
+	emacs --batch --load $(ASSETS_DIR)/lib/emacs/htmlize.el \
+	      --eval "(setq org-html-htmlize-output-type 'css)" \
+	      $< -f org-html-export-to-html
 
 clean:
 	rm -rf $(EXPORT_DIR)

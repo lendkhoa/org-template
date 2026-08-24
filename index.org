@@ -6,3 +6,14 @@
 * Index
 - [[./README.org][README]]
 - [[./template.org][Template]]
+
+* Org cheatsheet
+**Code block**
+
+#+begin_src java
+  class Hello {
+      public static main(String[]) {
+          System.out.println("Hello, world");
+      }
+  }
+#+end_src
