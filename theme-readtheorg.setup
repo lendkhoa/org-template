@@ -10,6 +10,94 @@
 #+HTML_HEAD: <script type="text/javascript" src="./org-themes/lib/js/mermaid.min.js"></script>
 #+HTML_HEAD: <script type="text/javascript" src="./org-themes/lib/js/svg-pan-zoom.min.js"></script>
 
+#+HTML_HEAD: <link rel="stylesheet" href="./pagefind/pagefind-ui.css"/>
+#+HTML_HEAD: <script src="./pagefind/pagefind-ui.js"></script>
+#+HTML_HEAD: <style>
+#+HTML_HEAD:   #pagefind-search-trigger {
+#+HTML_HEAD:     position: fixed;
+#+HTML_HEAD:     bottom: 32px;
+#+HTML_HEAD:     left: 32px;
+#+HTML_HEAD:     z-index: 9998;
+#+HTML_HEAD:     padding: 8px 14px;
+#+HTML_HEAD:     border-radius: 20px;
+#+HTML_HEAD:     border: 1px solid #ccc;
+#+HTML_HEAD:     background: #fff;
+#+HTML_HEAD:     color: #222;
+#+HTML_HEAD:     cursor: pointer;
+#+HTML_HEAD:     font-size: 14px;
+#+HTML_HEAD:     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+#+HTML_HEAD:   }
+#+HTML_HEAD:   #pagefind-modal-overlay {
+#+HTML_HEAD:     display: none;
+#+HTML_HEAD:     position: fixed;
+#+HTML_HEAD:     inset: 0;
+#+HTML_HEAD:     background: rgba(0, 0, 0, 0.5);
+#+HTML_HEAD:     z-index: 9999;
+#+HTML_HEAD:     padding: 10vh 1rem 1rem;
+#+HTML_HEAD:     overflow-y: auto;
+#+HTML_HEAD:   }
+#+HTML_HEAD:   #pagefind-modal-overlay.open {
+#+HTML_HEAD:     display: block;
+#+HTML_HEAD:   }
+#+HTML_HEAD:   #pagefind-modal-box {
+#+HTML_HEAD:     max-width: 640px;
+#+HTML_HEAD:     margin: 0 auto;
+#+HTML_HEAD:     background: #fff;
+#+HTML_HEAD:     border-radius: 8px;
+#+HTML_HEAD:     padding: 1rem;
+#+HTML_HEAD:     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.35);
+#+HTML_HEAD:   }
+#+HTML_HEAD: </style>
+#+HTML_HEAD: <script>
+#+HTML_HEAD:   // Pagefind's default UI mounts inline; wrap it in a cmd/ctrl+K modal
+#+HTML_HEAD:   // so search doesn't have to live permanently in the page layout.
+#+HTML_HEAD:   function addPagefindSearch() {
+#+HTML_HEAD:     const trigger = document.createElement('button');
+#+HTML_HEAD:     trigger.id = 'pagefind-search-trigger';
+#+HTML_HEAD:     trigger.type = 'button';
+#+HTML_HEAD:     trigger.textContent = '🔍 Search (⌘K)';
+#+HTML_HEAD:     document.body.appendChild(trigger);
+#+HTML_HEAD:
+#+HTML_HEAD:     const overlay = document.createElement('div');
+#+HTML_HEAD:     overlay.id = 'pagefind-modal-overlay';
+#+HTML_HEAD:     const box = document.createElement('div');
+#+HTML_HEAD:     box.id = 'pagefind-modal-box';
+#+HTML_HEAD:     const mount = document.createElement('div');
+#+HTML_HEAD:     mount.id = 'pagefind-search-mount';
+#+HTML_HEAD:     box.appendChild(mount);
+#+HTML_HEAD:     overlay.appendChild(box);
+#+HTML_HEAD:     document.body.appendChild(overlay);
+#+HTML_HEAD:
+#+HTML_HEAD:     let initialized = false;
+#+HTML_HEAD:     function openSearch() {
+#+HTML_HEAD:       overlay.classList.add('open');
+#+HTML_HEAD:       if (!initialized) {
+#+HTML_HEAD:         new PagefindUI({ element: '#pagefind-search-mount', showSubResults: true });
+#+HTML_HEAD:         initialized = true;
+#+HTML_HEAD:       }
+#+HTML_HEAD:       const input = mount.querySelector('input');
+#+HTML_HEAD:       if (input) input.focus();
+#+HTML_HEAD:     }
+#+HTML_HEAD:     function closeSearch() {
+#+HTML_HEAD:       overlay.classList.remove('open');
+#+HTML_HEAD:     }
+#+HTML_HEAD:
+#+HTML_HEAD:     trigger.addEventListener('click', openSearch);
+#+HTML_HEAD:     overlay.addEventListener('click', function (e) {
+#+HTML_HEAD:       if (e.target === overlay) closeSearch();
+#+HTML_HEAD:     });
+#+HTML_HEAD:     document.addEventListener('keydown', function (e) {
+#+HTML_HEAD:       if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
+#+HTML_HEAD:         e.preventDefault();
+#+HTML_HEAD:         overlay.classList.contains('open') ? closeSearch() : openSearch();
+#+HTML_HEAD:       } else if (e.key === 'Escape') {
+#+HTML_HEAD:         closeSearch();
+#+HTML_HEAD:       }
+#+HTML_HEAD:     });
+#+HTML_HEAD:   }
+#+HTML_HEAD:   window.addEventListener('load', addPagefindSearch);
+#+HTML_HEAD: </script>
+
 #+HTML_HEAD: <script src="https://cdn.jsdelivr.net/npm/darkmode-js@1.5.7/lib/darkmode-js.min.js"></script>
 #+HTML_HEAD: <script>
 #+HTML_HEAD:     function addDarkmodeWidget() {

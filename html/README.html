@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2026-08-24 Mon 11:40 -->
+<!-- 2026-08-24 Mon 13:53 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>org-template</title>
@@ -201,6 +201,93 @@
 <script type="text/javascript" src="./org-themes/readtheorg_theme/js/readtheorg.js"></script>
 <script type="text/javascript" src="./org-themes/lib/js/mermaid.min.js"></script>
 <script type="text/javascript" src="./org-themes/lib/js/svg-pan-zoom.min.js"></script>
+<link rel="stylesheet" href="./pagefind/pagefind-ui.css"/>
+<script src="./pagefind/pagefind-ui.js"></script>
+<style>
+#pagefind-search-trigger {
+position: fixed;
+bottom: 32px;
+left: 32px;
+z-index: 9998;
+padding: 8px 14px;
+border-radius: 20px;
+border: 1px solid #ccc;
+background: #fff;
+color: #222;
+cursor: pointer;
+font-size: 14px;
+box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+#pagefind-modal-overlay {
+display: none;
+position: fixed;
+inset: 0;
+background: rgba(0, 0, 0, 0.5);
+z-index: 9999;
+padding: 10vh 1rem 1rem;
+overflow-y: auto;
+}
+#pagefind-modal-overlay.open {
+display: block;
+}
+#pagefind-modal-box {
+max-width: 640px;
+margin: 0 auto;
+background: #fff;
+border-radius: 8px;
+padding: 1rem;
+box-shadow: 0 10px 40px rgba(0, 0, 0, 0.35);
+}
+</style>
+<script>
+// Pagefind's default UI mounts inline; wrap it in a cmd/ctrl+K modal
+// so search doesn't have to live permanently in the page layout.
+function addPagefindSearch() {
+const trigger = document.createElement('button');
+trigger.id = 'pagefind-search-trigger';
+trigger.type = 'button';
+trigger.textContent = '🔍 Search (⌘K)';
+document.body.appendChild(trigger);
+
+const overlay = document.createElement('div');
+overlay.id = 'pagefind-modal-overlay';
+const box = document.createElement('div');
+box.id = 'pagefind-modal-box';
+const mount = document.createElement('div');
+mount.id = 'pagefind-search-mount';
+box.appendChild(mount);
+overlay.appendChild(box);
+document.body.appendChild(overlay);
+
+let initialized = false;
+function openSearch() {
+overlay.classList.add('open');
+if (!initialized) {
+new PagefindUI({ element: '#pagefind-search-mount', showSubResults: true });
+initialized = true;
+}
+const input = mount.querySelector('input');
+if (input) input.focus();
+}
+function closeSearch() {
+overlay.classList.remove('open');
+}
+
+trigger.addEventListener('click', openSearch);
+overlay.addEventListener('click', function (e) {
+if (e.target === overlay) closeSearch();
+});
+document.addEventListener('keydown', function (e) {
+if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
+e.preventDefault();
+overlay.classList.contains('open') ? closeSearch() : openSearch();
+} else if (e.key === 'Escape') {
+closeSearch();
+}
+});
+}
+window.addEventListener('load', addPagefindSearch);
+</script>
 <script src="https://cdn.jsdelivr.net/npm/darkmode-js@1.5.7/lib/darkmode-js.min.js"></script>
 <script>
 function addDarkmodeWidget() {
@@ -238,12 +325,12 @@ window.addEventListener('load', addDarkmodeWidget);
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#org4ce1b37">1. Structure</a></li>
-<li><a href="#org813bf33">2. Customizations vs. the stock readtheorg theme</a></li>
-<li><a href="#orgd93cf42">3. Usage</a></li>
-<li><a href="#orgcb2dbe8">4. Deployment (Cloudflare Workers Git integration + GitHub SSO)</a>
+<li><a href="#org6b5fb2f">1. Structure</a></li>
+<li><a href="#org5a05d72">2. Customizations vs. the stock readtheorg theme</a></li>
+<li><a href="#org166d8fe">3. Usage</a></li>
+<li><a href="#org37dd6bc">4. Deployment (Cloudflare Workers Git integration + GitHub SSO)</a>
 <ul>
-<li><a href="#orgba84578">4.1. One-time Cloudflare setup</a></li>
+<li><a href="#orgc75c8e6">4.1. One-time Cloudflare setup</a></li>
 </ul>
 </li>
 </ul>
@@ -254,8 +341,8 @@ Starter template for exporting Org-mode files to HTML with a customized
 readtheorg theme. Copy this folder wherever a new note needs styled HTML
 export.
 </p>
-<div id="outline-container-org4ce1b37" class="outline-2">
-<h2 id="org4ce1b37"><span class="section-number-2">1.</span> Structure</h2>
+<div id="outline-container-org6b5fb2f" class="outline-2">
+<h2 id="org6b5fb2f"><span class="section-number-2">1.</span> Structure</h2>
 <div class="outline-text-2" id="text-1">
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
@@ -325,8 +412,8 @@ hand-edit anything inside it.
 </p>
 </div>
 </div>
-<div id="outline-container-org813bf33" class="outline-2">
-<h2 id="org813bf33"><span class="section-number-2">2.</span> Customizations vs. the stock readtheorg theme</h2>
+<div id="outline-container-org5a05d72" class="outline-2">
+<h2 id="org5a05d72"><span class="section-number-2">2.</span> Customizations vs. the stock readtheorg theme</h2>
 <div class="outline-text-2" id="text-2">
 <ul class="org-ul">
 <li><b>Collapsible TOC sidebar</b>: a hamburger button toggles the left
@@ -342,8 +429,8 @@ light/dark.</li>
 </ul>
 </div>
 </div>
-<div id="outline-container-orgd93cf42" class="outline-2">
-<h2 id="orgd93cf42"><span class="section-number-2">3.</span> Usage</h2>
+<div id="outline-container-org166d8fe" class="outline-2">
+<h2 id="org166d8fe"><span class="section-number-2">3.</span> Usage</h2>
 <div class="outline-text-2" id="text-3">
 <ol class="org-ol">
 <li>Copy this folder to the new note's location.</li>
@@ -374,8 +461,8 @@ keep the <code>org-themes/</code> folder alongside it when exporting by hand.
 </p>
 </div>
 </div>
-<div id="outline-container-orgcb2dbe8" class="outline-2">
-<h2 id="orgcb2dbe8"><span class="section-number-2">4.</span> Deployment (Cloudflare Workers Git integration + GitHub SSO)</h2>
+<div id="outline-container-org37dd6bc" class="outline-2">
+<h2 id="org37dd6bc"><span class="section-number-2">4.</span> Deployment (Cloudflare Workers Git integration + GitHub SSO)</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 The Cloudflare dashboard's "Create a Worker" → "Import a repository" flow
@@ -400,8 +487,8 @@ commit. Every push to the connected branch (<code>main</code>) triggers a redepl
 of that content — no GitHub Actions workflow involved.
 </p>
 </div>
-<div id="outline-container-orgba84578" class="outline-3">
-<h3 id="orgba84578"><span class="section-number-3">4.1.</span> One-time Cloudflare setup</h3>
+<div id="outline-container-orgc75c8e6" class="outline-3">
+<h3 id="orgc75c8e6"><span class="section-number-3">4.1.</span> One-time Cloudflare setup</h3>
 <div class="outline-text-3" id="text-4-1">
 <ol class="org-ol">
 <li><b>Run the wizard</b> (Workers &amp; Pages → Create → Import a repository),
@@ -431,7 +518,7 @@ the site prompts a GitHub login and only approved accounts get through.
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Khoa Le</p>
-<p class="date">Created: 2026-08-24 Mon 11:40</p>
+<p class="date">Created: 2026-08-24 Mon 13:53</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

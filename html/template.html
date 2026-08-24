@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2026-08-24 Mon 11:40 -->
+<!-- 2026-08-24 Mon 13:53 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Untitled</title>
@@ -201,6 +201,93 @@
 <script type="text/javascript" src="./org-themes/readtheorg_theme/js/readtheorg.js"></script>
 <script type="text/javascript" src="./org-themes/lib/js/mermaid.min.js"></script>
 <script type="text/javascript" src="./org-themes/lib/js/svg-pan-zoom.min.js"></script>
+<link rel="stylesheet" href="./pagefind/pagefind-ui.css"/>
+<script src="./pagefind/pagefind-ui.js"></script>
+<style>
+#pagefind-search-trigger {
+position: fixed;
+bottom: 32px;
+left: 32px;
+z-index: 9998;
+padding: 8px 14px;
+border-radius: 20px;
+border: 1px solid #ccc;
+background: #fff;
+color: #222;
+cursor: pointer;
+font-size: 14px;
+box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+#pagefind-modal-overlay {
+display: none;
+position: fixed;
+inset: 0;
+background: rgba(0, 0, 0, 0.5);
+z-index: 9999;
+padding: 10vh 1rem 1rem;
+overflow-y: auto;
+}
+#pagefind-modal-overlay.open {
+display: block;
+}
+#pagefind-modal-box {
+max-width: 640px;
+margin: 0 auto;
+background: #fff;
+border-radius: 8px;
+padding: 1rem;
+box-shadow: 0 10px 40px rgba(0, 0, 0, 0.35);
+}
+</style>
+<script>
+// Pagefind's default UI mounts inline; wrap it in a cmd/ctrl+K modal
+// so search doesn't have to live permanently in the page layout.
+function addPagefindSearch() {
+const trigger = document.createElement('button');
+trigger.id = 'pagefind-search-trigger';
+trigger.type = 'button';
+trigger.textContent = '🔍 Search (⌘K)';
+document.body.appendChild(trigger);
+
+const overlay = document.createElement('div');
+overlay.id = 'pagefind-modal-overlay';
+const box = document.createElement('div');
+box.id = 'pagefind-modal-box';
+const mount = document.createElement('div');
+mount.id = 'pagefind-search-mount';
+box.appendChild(mount);
+overlay.appendChild(box);
+document.body.appendChild(overlay);
+
+let initialized = false;
+function openSearch() {
+overlay.classList.add('open');
+if (!initialized) {
+new PagefindUI({ element: '#pagefind-search-mount', showSubResults: true });
+initialized = true;
+}
+const input = mount.querySelector('input');
+if (input) input.focus();
+}
+function closeSearch() {
+overlay.classList.remove('open');
+}
+
+trigger.addEventListener('click', openSearch);
+overlay.addEventListener('click', function (e) {
+if (e.target === overlay) closeSearch();
+});
+document.addEventListener('keydown', function (e) {
+if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
+e.preventDefault();
+overlay.classList.contains('open') ? closeSearch() : openSearch();
+} else if (e.key === 'Escape') {
+closeSearch();
+}
+});
+}
+window.addEventListener('load', addPagefindSearch);
+</script>
 <script src="https://cdn.jsdelivr.net/npm/darkmode-js@1.5.7/lib/darkmode-js.min.js"></script>
 <script>
 function addDarkmodeWidget() {
@@ -238,12 +325,12 @@ window.addEventListener('load', addDarkmodeWidget);
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#org2340f3e">1. First section</a></li>
+<li><a href="#org22331cd">1. First section</a></li>
 </ul>
 </div>
 </div>
-<div id="outline-container-org2340f3e" class="outline-2">
-<h2 id="org2340f3e"><span class="section-number-2">1.</span> First section</h2>
+<div id="outline-container-org22331cd" class="outline-2">
+<h2 id="org22331cd"><span class="section-number-2">1.</span> First section</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 Start writing here.
@@ -291,7 +378,7 @@ Start writing here.
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Khoa Le</p>
-<p class="date">Created: 2026-08-24 Mon 11:40</p>
+<p class="date">Created: 2026-08-24 Mon 13:53</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

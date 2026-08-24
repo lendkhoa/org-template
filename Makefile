@@ -20,6 +20,7 @@ export: $(HTML_FILES)
 	@rm -rf $(EXPORT_DIR)/$(ASSETS_DIR)
 	@cp -R $(ASSETS_DIR) $(EXPORT_DIR)/$(ASSETS_DIR)
 	@if [ ! -f $(EXPORT_DIR)/index.html ] && [ -f $(EXPORT_DIR)/$(INDEX_SRC) ]; then cp $(EXPORT_DIR)/$(INDEX_SRC) $(EXPORT_DIR)/index.html; fi
+	@npx --yes pagefind --site $(EXPORT_DIR)
 	@echo "Exported $(words $(HTML_FILES)) file(s) to $(EXPORT_DIR)/"
 
 # `emacs --batch` loads no init file, so htmlize (syntax coloring) isn't on
