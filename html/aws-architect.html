@@ -1,0 +1,1501 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2026-08-24 Mon 09:18 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>AWS SAA-C03 Scenario-Driven Study Guide</title>
+<meta name="author" content="Compiled for exam prep (Stephane Maarek course companion)" />
+<meta name="generator" content="Org Mode" />
+<style type="text/css">
+  #content { max-width: 60em; margin: auto; }
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #e6e6e6;
+    border-radius: 3px;
+    background-color: #f2f2f2;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: auto;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    top: -8px;
+    right: 12px;
+    padding: 3px;
+    color: #555;
+    background-color: #f2f2f299;
+  }
+  pre.src:hover:before { display: inline; margin-top: 14px;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-authinfo::before { content: 'Authinfo'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { }
+</style>
+<link rel="stylesheet" type="text/css" href="./org-themes/readtheorg_theme/css/htmlize.css"/>
+<link rel="stylesheet" type="text/css" href="./org-themes/readtheorg_theme/css/readtheorg.css"/>
+<script type="text/javascript" src="./org-themes/lib/js/jquery.min.js"></script>
+<script type="text/javascript" src="./org-themes/lib/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="./org-themes/lib/js/jquery.stickytableheaders.min.js"></script>
+<script type="text/javascript" src="./org-themes/readtheorg_theme/js/readtheorg.js"></script>
+<script type="text/javascript" src="./org-themes/lib/js/mermaid.min.js"></script>
+<script type="text/javascript" src="./org-themes/lib/js/svg-pan-zoom.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/darkmode-js@1.5.7/lib/darkmode-js.min.js"></script>
+<script>
+function addDarkmodeWidget() {
+const options = {
+bottom: '64px', // default: '32px'
+right: '32px', // default: '32px'
+left: 'unset', // default: 'unset'
+time: '0.5s', // default: '0.3s'
+mixColor: '#fff', // default: '#fff'
+backgroundColor: '#fff',  // default: '#fff'
+buttonColorDark: '#100f2c',  // default: '#100f2c'
+buttonColorLight: '#fff', // default: '#fff'
+saveInCookies: false, // default: true,
+label: '🌓', // default: ''
+autoMatchOsTheme: false // default: true; dark is the default regardless of OS theme
+}
+const darkmode = new Darkmode(options);
+darkmode.showWidget();
+// darkmode.toggle() drives a different (buggy) code path than a
+// real click: it skips the "expanded" class that squares off the
+// reveal layer's border-radius, leaving a 100%-sized circle that
+// renders as an oval inscribed in the viewport. Clicking the
+// actual button runs the same listener a user click would.
+if (!darkmode.isActivated()) {
+document.querySelector('.darkmode-toggle').click();
+}
+}
+window.addEventListener('load', addDarkmodeWidget);
+</script>
+</head>
+<body>
+<div id="content" class="content">
+<h1 class="title">AWS SAA-C03 Scenario-Driven Study Guide</h1>
+<div id="table-of-contents" role="doc-toc">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents" role="doc-toc">
+<ul>
+<li><a href="#org4d7585b">1. How to Use This Guide</a></li>
+<li><a href="#org035c668">2. Domain 1: Design Secure Architectures <code>[30%]</code></a>
+<ul>
+<li><a href="#org017598f">2.1. Core Architectural Patterns &amp; Service Pairings</a>
+<ul>
+<li><a href="#org348205f">2.1.1. Edge protection for static/dynamic content</a></li>
+<li><a href="#org5d34490">2.1.2. Private connectivity (no internet traversal)</a></li>
+<li><a href="#org4acb00d">2.1.3. Identity &amp; access</a></li>
+<li><a href="#org73a3f92">2.1.4. Data protection</a></li>
+<li><a href="#orgd36655e">2.1.5. Network segmentation</a></li>
+</ul>
+</li>
+<li><a href="#orgd90d824">2.2. Scenario Keyword Decoder ("Exam Buzzword Matrix")</a></li>
+<li><a href="#orgdef5ba1">2.3. Tricky Scenarios &amp; Distractor Analysis</a>
+<ul>
+<li><a href="#org8979af9">2.3.1. Scenario 1: Private S3 origin</a></li>
+<li><a href="#org907200a">2.3.2. Scenario 2: Private subnet → S3, cheapest and most secure</a></li>
+<li><a href="#org59b91e6">2.3.3. Scenario 3: Third-party auditor account access</a></li>
+</ul>
+</li>
+<li><a href="#orgd6932a7">2.4. Visual Architecture Diagram</a></li>
+<li><a href="#org856d0c5">2.5. AWS Documentation Links</a></li>
+</ul>
+</li>
+<li><a href="#orgd2b477d">3. Domain 2: Design Resilient Architectures <code>[26%]</code></a>
+<ul>
+<li><a href="#orgaddb1aa">3.1. Core Architectural Patterns &amp; Service Pairings</a>
+<ul>
+<li><a href="#org07b8613">3.1.1. The canonical 3-tier HA stack</a></li>
+<li><a href="#orgac50605">3.1.2. Database resilience vocabulary (memorize this split)</a></li>
+<li><a href="#org35f91a8">3.1.3. Decoupling &amp; buffering</a></li>
+<li><a href="#orge2566ff">3.1.4. Disaster recovery ladder (cost ↑ as RTO/RPO ↓)</a></li>
+<li><a href="#org5fb1f36">3.1.5. Storage resilience</a></li>
+</ul>
+</li>
+<li><a href="#org71fe3c1">3.2. Scenario Keyword Decoder ("Exam Buzzword Matrix")</a></li>
+<li><a href="#org1e37ed1">3.3. Tricky Scenarios &amp; Distractor Analysis</a>
+<ul>
+<li><a href="#org1ebe109">3.3.1. Scenario 1: "HA for RDS" — the classic trap</a></li>
+<li><a href="#org3217ada">3.3.2. Scenario 2: Order processing that must never drop requests</a></li>
+<li><a href="#orgce2eed7">3.3.3. Scenario 3: Picking the DR strategy</a></li>
+</ul>
+</li>
+<li><a href="#orga69abbf">3.4. Visual Architecture Diagram</a></li>
+<li><a href="#org8bba4a2">3.5. AWS Documentation Links</a></li>
+</ul>
+</li>
+<li><a href="#orgbb35e91">4. Domain 3: Design High-Performing Architectures <code>[24%]</code></a>
+<ul>
+<li><a href="#org01b85af">4.1. Core Architectural Patterns &amp; Service Pairings</a>
+<ul>
+<li><a href="#orgded9464">4.1.1. Caching ladder (edge → app → data)</a></li>
+<li><a href="#org379e64d">4.1.2. Database right-sizing</a></li>
+<li><a href="#org67013a0">4.1.3. Storage performance</a></li>
+<li><a href="#org5c898b2">4.1.4. Network performance</a></li>
+<li><a href="#orgf8235e7">4.1.5. Streaming &amp; ingestion</a></li>
+</ul>
+</li>
+<li><a href="#orgf28c050">4.2. Scenario Keyword Decoder ("Exam Buzzword Matrix")</a></li>
+<li><a href="#org9dd00f0">4.3. Tricky Scenarios &amp; Distractor Analysis</a>
+<ul>
+<li><a href="#org08269f7">4.3.1. Scenario 1: CloudFront vs Global Accelerator</a></li>
+<li><a href="#orgf84a748">4.3.2. Scenario 2: Read-heavy DynamoDB with a caching constraint</a></li>
+<li><a href="#orgc8e4cf9">4.3.3. Scenario 3: Ad-hoc SQL on logs in S3</a></li>
+</ul>
+</li>
+<li><a href="#org24b77dc">4.4. Visual Architecture Diagram</a></li>
+<li><a href="#org2cf0abe">4.5. AWS Documentation Links</a></li>
+</ul>
+</li>
+<li><a href="#org022b1e0">5. Domain 4: Design Cost-Optimized Architectures <code>[20%]</code></a>
+<ul>
+<li><a href="#orge35943c">5.1. Core Architectural Patterns &amp; Service Pairings</a>
+<ul>
+<li><a href="#org4b17b10">5.1.1. Compute purchasing ladder</a></li>
+<li><a href="#org950a213">5.1.2. S3 storage class ladder (know retrieval semantics cold)</a></li>
+<li><a href="#orgd340982">5.1.3. Network cost traps</a></li>
+<li><a href="#orgf9e7d69">5.1.4. Database &amp; analytics cost</a></li>
+<li><a href="#org81eb080">5.1.5. Visibility &amp; governance</a></li>
+</ul>
+</li>
+<li><a href="#org22047e3">5.2. Scenario Keyword Decoder ("Exam Buzzword Matrix")</a></li>
+<li><a href="#org21d2731">5.3. Tricky Scenarios &amp; Distractor Analysis</a>
+<ul>
+<li><a href="#org59593a2">5.3.1. Scenario 1: The lifecycle-policy compliance trap</a></li>
+<li><a href="#org0a92def">5.3.2. Scenario 2: The $10k NAT Gateway bill</a></li>
+<li><a href="#orgb06ac85">5.3.3. Scenario 3: Spot vs everything else</a></li>
+</ul>
+</li>
+<li><a href="#orgaf3e81a">5.4. Visual Architecture Diagram</a></li>
+<li><a href="#orgae15f41">5.5. AWS Documentation Links</a></li>
+</ul>
+</li>
+<li><a href="#org4f94bdd">6. Cross-Domain Rapid-Fire Elimination Table</a></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org4d7585b" class="outline-2">
+<h2 id="org4d7585b"><span class="section-number-2">1.</span> How to Use This Guide</h2>
+<div class="outline-text-2" id="text-1">
+<ul class="org-ul">
+<li>Each domain follows the same structure: Patterns → Buzzword Matrix → Tricky Scenarios → Diagram → Docs.</li>
+<li>The exam rarely tests "what is service X." It tests <i>which service combination</i> satisfies constraints like cost, RTO/RPO, latency, and operational overhead. Train yourself to underline the constraint words in every question.</li>
+<li>Golden elimination rule: if two answers are technically valid, the one that is <b>more managed</b>, <b>more AWS-native</b>, and <b>matches the stated constraint</b> (cheapest, fastest, least ops) wins.</li>
+<li>Distractors usually fail for one of five reasons: (1) wrong scope (AZ vs Region vs Global), (2) wrong consistency/durability guarantee, (3) violates the cost or ops constraint, (4) solves availability when the question asks scalability (or vice versa), (5) legacy/self-managed option when a managed one exists.</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org035c668" class="outline-2">
+<h2 id="org035c668"><span class="section-number-2">2.</span> Domain 1: Design Secure Architectures <code>[30%]</code></h2>
+<div class="outline-text-2" id="text-2">
+</div>
+<div id="outline-container-org017598f" class="outline-3">
+<h3 id="org017598f"><span class="section-number-3">2.1.</span> Core Architectural Patterns &amp; Service Pairings</h3>
+<div class="outline-text-3" id="text-2-1">
+</div>
+<div id="outline-container-org348205f" class="outline-4">
+<h4 id="org348205f"><span class="section-number-4">2.1.1.</span> Edge protection for static/dynamic content</h4>
+<div class="outline-text-4" id="text-2-1-1">
+<ul class="org-ul">
+<li><b>S3 + CloudFront + Origin Access Control (OAC) + WAF</b>: Bucket stays private; only CloudFront can read it via OAC (the modern replacement for OAI). WAF attaches to the CloudFront distribution for L7 filtering (SQLi, XSS, geo-match, rate-based rules). Shield Standard is automatic; Shield Advanced adds DDoS cost protection + DRT support.</li>
+<li><b>ALB + WAF + Cognito</b>: WAF Web ACL on the ALB; ALB can natively authenticate users against Cognito User Pools before traffic reaches targets.</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org5d34490" class="outline-4">
+<h4 id="org5d34490"><span class="section-number-4">2.1.2.</span> Private connectivity (no internet traversal)</h4>
+<div class="outline-text-4" id="text-2-1-2">
+<ul class="org-ul">
+<li><b>Gateway VPC Endpoint (S3 / DynamoDB)</b>: Free, route-table based, S3 and DynamoDB only.</li>
+<li><b>Interface VPC Endpoint (PrivateLink)</b>: ENI-based, hourly + data cost, works for most other AWS services (SQS, SNS, KMS, Secrets Manager, SSM&#x2026;) and third-party/SaaS endpoint services.</li>
+<li><b>Site-to-Site VPN over Direct Connect</b>: DX alone is <b>not encrypted</b>; layering an IPsec VPN over DX gives private + encrypted.</li>
+<li><b>Transit Gateway + DX Gateway</b>: Hub-and-spoke for many VPCs/on-prem networks; replaces unscalable VPC-peering meshes.</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org4acb00d" class="outline-4">
+<h4 id="org4acb00d"><span class="section-number-4">2.1.3.</span> Identity &amp; access</h4>
+<div class="outline-text-4" id="text-2-1-3">
+<ul class="org-ul">
+<li><b>IAM Roles &gt; IAM Users/keys</b>: EC2 instance profiles, ECS task roles, Lambda execution roles. Cross-account access = role in target account + <code>sts:AssumeRole</code> trust policy (never share access keys).</li>
+<li><b>Cognito User Pools</b> = authentication (sign-in, JWT). <b>Cognito Identity Pools</b> = authorization (exchange identity for temporary AWS credentials).</li>
+<li><b>IAM Identity Center (SSO)</b>: workforce federation to multiple accounts in an Organization.</li>
+<li><b>SCPs (Service Control Policies)</b>: Organization-level guardrails — they set the maximum permission boundary; they never <i>grant</i> permissions.</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org73a3f92" class="outline-4">
+<h4 id="org73a3f92"><span class="section-number-4">2.1.4.</span> Data protection</h4>
+<div class="outline-text-4" id="text-2-1-4">
+<ul class="org-ul">
+<li><b>SSE-S3</b> (AWS-managed keys), <b>SSE-KMS</b> (auditable via CloudTrail, key policies, can enforce with bucket policy condition <code>s3:x-amz-server-side-encryption</code>), <b>SSE-C</b> (customer supplies key per request), <b>client-side encryption</b> (AWS never sees plaintext).</li>
+<li><b>KMS multi-Region keys</b>: encrypt in one Region, decrypt in another (DR-friendly).</li>
+<li><b>Secrets Manager</b>: secrets <b>with automatic rotation</b> (native RDS/Aurora/Redshift/DocumentDB rotation). <b>SSM Parameter Store</b>: config values, free standard tier, <b>no native rotation</b>.</li>
+<li><b>Macie</b>: discovers PII/sensitive data in S3. <b>GuardDuty</b>: threat detection (VPC Flow Logs, DNS, CloudTrail analysis). <b>Inspector</b>: vulnerability scanning of EC2/ECR/Lambda. <b>Security Hub</b>: aggregates findings.</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgd36655e" class="outline-4">
+<h4 id="orgd36655e"><span class="section-number-4">2.1.5.</span> Network segmentation</h4>
+<div class="outline-text-4" id="text-2-1-5">
+<ul class="org-ul">
+<li><b>Security Groups</b>: stateful, allow-rules only, instance/ENI level.</li>
+<li><b>NACLs</b>: stateless (need explicit inbound AND outbound rules, mind ephemeral ports), allow + deny, subnet level. Use NACL deny rules to block a specific IP.</li>
+</ul>
+</div>
+</div>
+</div>
+<div id="outline-container-orgd90d824" class="outline-3">
+<h3 id="orgd90d824"><span class="section-number-3">2.2.</span> Scenario Keyword Decoder ("Exam Buzzword Matrix")</h3>
+<div class="outline-text-3" id="text-2-2">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">Scenario Trigger Phrase</th>
+<th scope="col" class="org-left">Target Service / Architecture Pattern</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">"S3 content must only be accessible via CloudFront"</td>
+<td class="org-left">Origin Access Control (OAC) + bucket policy allowing OAC</td>
+</tr>
+
+<tr>
+<td class="org-left">"Block SQL injection / XSS / specific countries"</td>
+<td class="org-left">AWS WAF (on CloudFront, ALB, or API Gateway)</td>
+</tr>
+
+<tr>
+<td class="org-left">"Protect against large-scale DDoS, cost protection"</td>
+<td class="org-left">Shield Advanced</td>
+</tr>
+
+<tr>
+<td class="org-left">"Access S3/DynamoDB from private subnet, no internet, no cost"</td>
+<td class="org-left">Gateway VPC Endpoint</td>
+</tr>
+
+<tr>
+<td class="org-left">"Privately access SQS/KMS/Secrets Manager from VPC"</td>
+<td class="org-left">Interface VPC Endpoint (PrivateLink)</td>
+</tr>
+
+<tr>
+<td class="org-left">"Expose a service to other VPCs without peering"</td>
+<td class="org-left">PrivateLink (Endpoint Service + NLB)</td>
+</tr>
+
+<tr>
+<td class="org-left">"Encrypted AND private connection to on-prem"</td>
+<td class="org-left">Site-to-Site VPN over Direct Connect</td>
+</tr>
+
+<tr>
+<td class="org-left">"Automatically rotate database credentials"</td>
+<td class="org-left">Secrets Manager</td>
+</tr>
+
+<tr>
+<td class="org-left">"Audit who used an encryption key"</td>
+<td class="org-left">SSE-KMS + CloudTrail</td>
+</tr>
+
+<tr>
+<td class="org-left">"Discover PII stored in S3"</td>
+<td class="org-left">Macie</td>
+</tr>
+
+<tr>
+<td class="org-left">"Detect compromised instances / crypto mining"</td>
+<td class="org-left">GuardDuty</td>
+</tr>
+
+<tr>
+<td class="org-left">"Prevent any account in the Org from disabling CloudTrail"</td>
+<td class="org-left">Service Control Policy (SCP)</td>
+</tr>
+
+<tr>
+<td class="org-left">"Cross-account access with least privilege"</td>
+<td class="org-left">IAM role + sts:AssumeRole (external ID for 3rd parties)</td>
+</tr>
+
+<tr>
+<td class="org-left">"Block one malicious IP address at subnet level"</td>
+<td class="org-left">NACL deny rule (SGs cannot deny)</td>
+</tr>
+
+<tr>
+<td class="org-left">"Temporary S3 upload/download access for an app user"</td>
+<td class="org-left">Pre-signed URLs</td>
+</tr>
+
+<tr>
+<td class="org-left">"Users sign in with Google/Facebook, then access AWS"</td>
+<td class="org-left">Cognito Identity Pool (federated identities)</td>
+</tr>
+
+<tr>
+<td class="org-left">"SSH access without opening port 22 / no bastion"</td>
+<td class="org-left">SSM Session Manager</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="outline-container-orgdef5ba1" class="outline-3">
+<h3 id="orgdef5ba1"><span class="section-number-3">2.3.</span> Tricky Scenarios &amp; Distractor Analysis</h3>
+<div class="outline-text-3" id="text-2-3">
+</div>
+<div id="outline-container-org8979af9" class="outline-4">
+<h4 id="org8979af9"><span class="section-number-4">2.3.1.</span> Scenario 1: Private S3 origin</h4>
+<div class="outline-text-4" id="text-2-3-1">
+<ol class="org-ol">
+<li><b>Requirement</b>: A company serves a static site from S3 through CloudFront. Security mandates the bucket must not be publicly accessible and objects must only be retrievable through CloudFront, with minimal management.</li>
+<li><b>Correct Architecture</b>: Keep Block Public Access ON. Create an <b>Origin Access Control (OAC)</b> on the CloudFront distribution and add a bucket policy allowing <code>s3:GetObject</code> only when the request comes from that distribution (<code>AWS:SourceArn</code> condition, principal <code>cloudfront.amazonaws.com</code>).</li>
+<li><b>Why Distractors Fail</b>:
+<ul class="org-ul">
+<li><i>Make the bucket public with a website endpoint</i>: violates the "not public" requirement; S3 website endpoints also don't support OAC or HTTPS to origin.</li>
+<li><i>Use signed URLs for every object</i>: solves user-level authorization, not origin locking, and adds heavy operational overhead.</li>
+<li><i>Use OAI</i>: technically works but is legacy; when both appear, OAC is the intended answer (supports SSE-KMS, all Regions, POST/PUT).</li>
+</ul></li>
+</ol>
+</div>
+</div>
+<div id="outline-container-org907200a" class="outline-4">
+<h4 id="org907200a"><span class="section-number-4">2.3.2.</span> Scenario 2: Private subnet → S3, cheapest and most secure</h4>
+<div class="outline-text-4" id="text-2-3-2">
+<ol class="org-ol">
+<li><b>Requirement</b>: EC2 instances in private subnets upload logs to S3. Traffic must not traverse the internet, and the solution should minimize cost.</li>
+<li><b>Correct Architecture</b>: <b>Gateway VPC Endpoint for S3</b> + route table entry + (optionally) endpoint policy / bucket policy with <code>aws:sourceVpce</code> condition.</li>
+<li><b>Why Distractors Fail</b>:
+<ul class="org-ul">
+<li><i>NAT Gateway</i>: traffic technically leaves via AWS's network to the public S3 endpoint, costs ~$0.045/GB processing + hourly — fails both constraints.</li>
+<li><i>Interface endpoint for S3</i>: works, but incurs hourly + per-GB charges; only preferred when on-prem hosts must reach S3 privately over DX/VPN (gateway endpoints aren't reachable from outside the VPC).</li>
+<li><i>VPC peering to an "S3 VPC"</i>: S3 doesn't live in a customer VPC; nonsense distractor.</li>
+</ul></li>
+</ol>
+</div>
+</div>
+<div id="outline-container-org59b91e6" class="outline-4">
+<h4 id="org59b91e6"><span class="section-number-4">2.3.3.</span> Scenario 3: Third-party auditor account access</h4>
+<div class="outline-text-4" id="text-2-3-3">
+<ol class="org-ol">
+<li><b>Requirement</b>: An external auditing firm needs read-only access to CloudTrail logs in your account. Grant access securely.</li>
+<li><b>Correct Architecture</b>: Create an <b>IAM role</b> with a read-only policy scoped to the log bucket/CloudTrail, trust policy naming the auditor's AWS account, and require an <b>External ID</b> to prevent the confused-deputy problem. Auditor assumes the role via STS.</li>
+<li><b>Why Distractors Fail</b>:
+<ul class="org-ul">
+<li><i>Create an IAM user and email them the access keys</i>: long-lived credentials, no rotation, violates least privilege best practice — always wrong on this exam.</li>
+<li><i>Make the log bucket public with a hard-to-guess name</i>: security through obscurity; instant elimination.</li>
+<li><i>Cross-account role without External ID</i>: a partial answer; when External ID appears as an option for third parties, pick it.</li>
+</ul></li>
+</ol>
+</div>
+</div>
+</div>
+<div id="outline-container-orgd6932a7" class="outline-3">
+<h3 id="orgd6932a7"><span class="section-number-3">2.4.</span> Visual Architecture Diagram</h3>
+<div class="outline-text-3" id="text-2-4">
+<div class="org-src-container">
+<pre class="src src-mermaid">flowchart LR
+    U[Users] --&gt;|HTTPS| WAF[AWS WAF&lt;br/&gt;Web ACL]
+    WAF --&gt; CF[CloudFront&lt;br/&gt;+ Shield Standard]
+    CF --&gt;|OAC signed requests| S3[(Private S3 Bucket&lt;br/&gt;Block Public Access ON)]
+    CF --&gt;|/api/*| ALB[ALB&lt;br/&gt;+ Cognito Auth]
+    ALB --&gt; EC2[EC2 in Private Subnet]
+    EC2 --&gt;|Gateway Endpoint| S3L[(S3 Logs)]
+    EC2 --&gt;|Interface Endpoint| SM[Secrets Manager&lt;br/&gt;auto-rotates RDS creds]
+    SM --&gt; RDS[(RDS - encrypted&lt;br/&gt;with KMS)]
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org856d0c5" class="outline-3">
+<h3 id="org856d0c5"><span class="section-number-3">2.5.</span> AWS Documentation Links</h3>
+<div class="outline-text-3" id="text-2-5">
+<ul class="org-ul">
+<li>OAC: <a href="https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/private-content-restricting-access-to-s3.html">https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/private-content-restricting-access-to-s3.html</a></li>
+<li>VPC Endpoints: <a href="https://docs.aws.amazon.com/vpc/latest/privatelink/concepts.html">https://docs.aws.amazon.com/vpc/latest/privatelink/concepts.html</a></li>
+<li>Gateway endpoints for S3: <a href="https://docs.aws.amazon.com/vpc/latest/privatelink/vpc-endpoints-s3.html">https://docs.aws.amazon.com/vpc/latest/privatelink/vpc-endpoints-s3.html</a></li>
+<li>IAM roles cross-account + External ID: <a href="https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_common-scenarios_third-party.html">https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_common-scenarios_third-party.html</a></li>
+<li>Secrets Manager rotation: <a href="https://docs.aws.amazon.com/secretsmanager/latest/userguide/rotating-secrets.html">https://docs.aws.amazon.com/secretsmanager/latest/userguide/rotating-secrets.html</a></li>
+<li>S3 encryption options: <a href="https://docs.aws.amazon.com/AmazonS3/latest/userguide/serv-side-encryption.html">https://docs.aws.amazon.com/AmazonS3/latest/userguide/serv-side-encryption.html</a></li>
+<li>Security groups vs NACLs: <a href="https://docs.aws.amazon.com/vpc/latest/userguide/infrastructure-security.html">https://docs.aws.amazon.com/vpc/latest/userguide/infrastructure-security.html</a></li>
+<li>SCPs: <a href="https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_policies_scps.html">https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_policies_scps.html</a></li>
+</ul>
+</div>
+</div>
+</div>
+<div id="outline-container-orgd2b477d" class="outline-2">
+<h2 id="orgd2b477d"><span class="section-number-2">3.</span> Domain 2: Design Resilient Architectures <code>[26%]</code></h2>
+<div class="outline-text-2" id="text-3">
+</div>
+<div id="outline-container-orgaddb1aa" class="outline-3">
+<h3 id="orgaddb1aa"><span class="section-number-3">3.1.</span> Core Architectural Patterns &amp; Service Pairings</h3>
+<div class="outline-text-3" id="text-3-1">
+</div>
+<div id="outline-container-org07b8613" class="outline-4">
+<h4 id="org07b8613"><span class="section-number-4">3.1.1.</span> The canonical 3-tier HA stack</h4>
+<div class="outline-text-4" id="text-3-1-1">
+<ul class="org-ul">
+<li><b>Route 53 → ALB (multi-AZ by design) → Auto Scaling Group across ≥2 AZs → RDS Multi-AZ</b>.</li>
+<li>ASG health checks should use <b>ELB health checks</b> (not just EC2 status) so app-level failures trigger replacement.</li>
+<li>Session state moved off instances → <b>ElastiCache (Redis) or DynamoDB</b> so instances are stateless/disposable.</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgac50605" class="outline-4">
+<h4 id="orgac50605"><span class="section-number-4">3.1.2.</span> Database resilience vocabulary (memorize this split)</h4>
+<div class="outline-text-4" id="text-3-1-2">
+<ul class="org-ul">
+<li><b>RDS Multi-AZ</b>: synchronous standby, automatic failover (~60–120s), <b>same endpoint</b>, standby NOT readable (except Multi-AZ DB Cluster with 2 readable standbys). Purpose: <b>availability</b>.</li>
+<li><b>RDS Read Replicas</b>: asynchronous, readable, can be cross-Region, <b>no automatic failover</b> (manual promotion). Purpose: <b>read scalability</b> (+ manual DR).</li>
+<li><b>Aurora</b>: 6 copies across 3 AZs, up to 15 replicas, replicas ARE the failover targets (~30s), Reader/Writer endpoints.</li>
+<li><b>Aurora Global Database</b>: &lt;1s cross-Region replication lag, RPO ~1s, RTO &lt;1 min (managed failover) — the answer to "lowest RTO/RPO across Regions for relational data."</li>
+<li><b>DynamoDB Global Tables</b>: multi-Region, multi-active read/write — the answer for NoSQL active-active.</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org35f91a8" class="outline-4">
+<h4 id="org35f91a8"><span class="section-number-4">3.1.3.</span> Decoupling &amp; buffering</h4>
+<div class="outline-text-4" id="text-3-1-3">
+<ul class="org-ul">
+<li><b>SQS</b> between tiers: absorbs spikes, retries via visibility timeout, <b>DLQ</b> for poison messages. Standard = at-least-once, unordered; FIFO = exactly-once, ordered, 300/3000 msg/s.</li>
+<li><b>SNS → SQS fan-out</b>: one event, many independent consumers.</li>
+<li><b>EventBridge</b>: event routing with filtering, SaaS/AWS-service events, scheduling.</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orge2566ff" class="outline-4">
+<h4 id="orge2566ff"><span class="section-number-4">3.1.4.</span> Disaster recovery ladder (cost ↑ as RTO/RPO ↓)</h4>
+<div class="outline-text-4" id="text-3-1-4">
+<ol class="org-ol">
+<li><b>Backup &amp; Restore</b>: hours RTO — cheapest.</li>
+<li><b>Pilot Light</b>: core (DB replicated) always on, app servers off — RTO tens of minutes.</li>
+<li><b>Warm Standby</b>: full stack running scaled-down — RTO minutes.</li>
+<li><b>Multi-site Active-Active</b>: Route 53 latency/weighted routing, both Regions serve traffic — RTO ~0, most expensive.</li>
+<li><b>Route 53 failover routing + health checks</b> drives DNS-level failover for options 2–3. S3 <b>Cross-Region Replication</b> and <b>AWS Backup</b> underpin data-layer DR.</li>
+</ol>
+</div>
+</div>
+<div id="outline-container-org5fb1f36" class="outline-4">
+<h4 id="org5fb1f36"><span class="section-number-4">3.1.5.</span> Storage resilience</h4>
+<div class="outline-text-4" id="text-3-1-5">
+<ul class="org-ul">
+<li><b>EFS</b>: Regional (multi-AZ) by default, NFS, Linux, thousands of concurrent clients. One Zone class is cheaper but single-AZ.</li>
+<li><b>EBS</b>: locked to one AZ — "resilient shared storage across AZs" is never EBS. Snapshots (to S3) are the portability mechanism.</li>
+<li><b>S3</b>: 11 nines durability; Standard/IA are multi-AZ; One Zone-IA is not.</li>
+</ul>
+</div>
+</div>
+</div>
+<div id="outline-container-org71fe3c1" class="outline-3">
+<h3 id="org71fe3c1"><span class="section-number-3">3.2.</span> Scenario Keyword Decoder ("Exam Buzzword Matrix")</h3>
+<div class="outline-text-3" id="text-3-2">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">Scenario Trigger Phrase</th>
+<th scope="col" class="org-left">Target Service / Architecture Pattern</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">"Survive an AZ failure with automatic failover (RDS)"</td>
+<td class="org-left">RDS Multi-AZ deployment</td>
+</tr>
+
+<tr>
+<td class="org-left">"Offload read traffic / reporting queries"</td>
+<td class="org-left">Read Replicas (or Aurora reader endpoint)</td>
+</tr>
+
+<tr>
+<td class="org-left">"Lowest RTO and RPO across Regions (SQL)"</td>
+<td class="org-left">Aurora Global Database</td>
+</tr>
+
+<tr>
+<td class="org-left">"Multi-Region active-active writes (NoSQL)"</td>
+<td class="org-left">DynamoDB Global Tables</td>
+</tr>
+
+<tr>
+<td class="org-left">"Application tiers must not lose requests during spikes"</td>
+<td class="org-left">SQS queue between tiers + ASG scaling on queue depth</td>
+</tr>
+
+<tr>
+<td class="org-left">"Messages processed exactly once, in order"</td>
+<td class="org-left">SQS FIFO</td>
+</tr>
+
+<tr>
+<td class="org-left">"One event consumed by multiple systems independently"</td>
+<td class="org-left">SNS → SQS fan-out</td>
+</tr>
+
+<tr>
+<td class="org-left">"Failed messages must be inspected later"</td>
+<td class="org-left">SQS Dead-Letter Queue</td>
+</tr>
+
+<tr>
+<td class="org-left">"Shared POSIX file system across many EC2 in multiple AZs"</td>
+<td class="org-left">EFS</td>
+</tr>
+
+<tr>
+<td class="org-left">"RTO of minutes, minimize idle cost"</td>
+<td class="org-left">Warm Standby (or Pilot Light if 'tens of minutes')</td>
+</tr>
+
+<tr>
+<td class="org-left">"Route users away from unhealthy Region automatically"</td>
+<td class="org-left">Route 53 failover routing + health checks</td>
+</tr>
+
+<tr>
+<td class="org-left">"Retain DB backups beyond 35 days / centralize backups"</td>
+<td class="org-left">AWS Backup (or manual snapshots)</td>
+</tr>
+
+<tr>
+<td class="org-left">"Replace unhealthy app instances automatically"</td>
+<td class="org-left">ASG with ELB health checks</td>
+</tr>
+
+<tr>
+<td class="org-left">"Stateless web tier"</td>
+<td class="org-left">Session data → ElastiCache Redis / DynamoDB</td>
+</tr>
+
+<tr>
+<td class="org-left">"Reprocess a stream of events / multiple stream consumers"</td>
+<td class="org-left">Kinesis Data Streams (retention + replay), not SQS</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="outline-container-org1e37ed1" class="outline-3">
+<h3 id="org1e37ed1"><span class="section-number-3">3.3.</span> Tricky Scenarios &amp; Distractor Analysis</h3>
+<div class="outline-text-3" id="text-3-3">
+</div>
+<div id="outline-container-org1ebe109" class="outline-4">
+<h4 id="org1ebe109"><span class="section-number-4">3.3.1.</span> Scenario 1: "HA for RDS" — the classic trap</h4>
+<div class="outline-text-4" id="text-3-3-1">
+<ol class="org-ol">
+<li><b>Requirement</b>: A MySQL RDS database must remain available if an AZ fails, with automatic failover and no application connection-string changes.</li>
+<li><b>Correct Architecture</b>: Enable <b>Multi-AZ</b>. Synchronous standby in another AZ; on failure, DNS of the same endpoint flips to the standby automatically.</li>
+<li><b>Why Distractors Fail</b>:
+<ul class="org-ul">
+<li><i>Create a Read Replica in another AZ</i>: replication is asynchronous (possible data loss) and failover is <b>manual</b> (promote + repoint app). Read replicas = performance/DR, not HA.</li>
+<li><i>Take frequent snapshots</i>: that's backup/restore — RTO in hours, not automatic.</li>
+<li><i>Migrate to DynamoDB</i>: changing the data model is never the answer when a checkbox feature exists.</li>
+</ul></li>
+</ol>
+</div>
+</div>
+<div id="outline-container-org3217ada" class="outline-4">
+<h4 id="org3217ada"><span class="section-number-4">3.3.2.</span> Scenario 2: Order processing that must never drop requests</h4>
+<div class="outline-text-4" id="text-3-3-2">
+<ol class="org-ol">
+<li><b>Requirement</b>: A checkout flow spikes 10x during sales. Orders must never be lost, must be processed exactly once and in the order received per customer.</li>
+<li><b>Correct Architecture</b>: Web tier → <b>SQS FIFO queue</b> (MessageGroupId = customerId for per-customer ordering, deduplication ID for exactly-once) → ASG of workers scaling on <code>ApproximateNumberOfMessagesVisible</code>, with a <b>DLQ</b> for poison messages.</li>
+<li><b>Why Distractors Fail</b>:
+<ul class="org-ul">
+<li><i>SQS Standard</i>: at-least-once + best-effort ordering — violates both stated guarantees.</li>
+<li><i>SNS direct to consumers</i>: no buffering/persistence if consumers are down; messages lost.</li>
+<li><i>Kinesis Data Streams</i>: ordered per shard and replayable, but dedup/exactly-once consumer logic is on you; FIFO matches the requirement with less overhead. (Kinesis wins when the keyword is "real-time analytics," "multiple consumers reading same stream," or "replay.")</li>
+<li><i>Scale the web tier bigger</i>: throws money at the symptom; still tightly coupled.</li>
+</ul></li>
+</ol>
+</div>
+</div>
+<div id="outline-container-orgce2eed7" class="outline-4">
+<h4 id="orgce2eed7"><span class="section-number-4">3.3.3.</span> Scenario 3: Picking the DR strategy</h4>
+<div class="outline-text-4" id="text-3-3-3">
+<ol class="org-ol">
+<li><b>Requirement</b>: A business-critical app needs RTO ≤ 15 minutes and RPO ≤ 5 minutes in a second Region, while minimizing steady-state cost.</li>
+<li><b>Correct Architecture</b>: <b>Warm Standby</b> — scaled-down full environment in the DR Region, continuous data replication (e.g., Aurora Global DB or RDS cross-Region read replica + DMS/CRR for other data), Route 53 health-check failover; scale up ASG on failover.</li>
+<li><b>Why Distractors Fail</b>:
+<ul class="org-ul">
+<li><i>Backup &amp; Restore</i>: RTO measured in hours — fails the 15-minute target.</li>
+<li><i>Pilot Light</i>: app servers must be launched from AMIs at failover time — usually quoted as "tens of minutes"; risky for a 15-min RTO. (If the question says RTO 30–60 min and "lowest cost," pilot light wins.)</li>
+<li><i>Active-Active multi-site</i>: meets RTO/RPO easily but violates "minimize cost." The exam wants the <b>cheapest option that still meets the stated RTO/RPO</b>.</li>
+</ul></li>
+</ol>
+</div>
+</div>
+</div>
+<div id="outline-container-orga69abbf" class="outline-3">
+<h3 id="orga69abbf"><span class="section-number-3">3.4.</span> Visual Architecture Diagram</h3>
+<div class="outline-text-3" id="text-3-4">
+<div class="org-src-container">
+<pre class="src src-mermaid">flowchart LR
+    R53[Route 53&lt;br/&gt;health-check failover] --&gt; ALB[ALB - spans AZs]
+    subgraph AZ-A
+        EC2a[EC2 - ASG]
+        RDSp[(RDS Primary)]
+    end
+    subgraph AZ-B
+        EC2b[EC2 - ASG]
+        RDSs[(RDS Standby&lt;br/&gt;sync replication)]
+    end
+    ALB --&gt; EC2a
+    ALB --&gt; EC2b
+    EC2a --&gt; SQS[[SQS FIFO + DLQ]]
+    EC2b --&gt; SQS
+    SQS --&gt; W[Worker ASG&lt;br/&gt;scales on queue depth]
+    W --&gt; RDSp
+    RDSp -. automatic failover .-&gt; RDSs
+    RDSp -. async cross-Region .-&gt; DR[(Read Replica&lt;br/&gt;DR Region)]
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org8bba4a2" class="outline-3">
+<h3 id="org8bba4a2"><span class="section-number-3">3.5.</span> AWS Documentation Links</h3>
+<div class="outline-text-3" id="text-3-5">
+<ul class="org-ul">
+<li>RDS Multi-AZ: <a href="https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Concepts.MultiAZ.html">https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Concepts.MultiAZ.html</a></li>
+<li>RDS Read Replicas: <a href="https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_ReadRepl.html">https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_ReadRepl.html</a></li>
+<li>Aurora Global Database: <a href="https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/aurora-global-database.html">https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/aurora-global-database.html</a></li>
+<li>DR strategies whitepaper: <a href="https://docs.aws.amazon.com/whitepapers/latest/disaster-recovery-workloads-on-aws/disaster-recovery-options-in-the-cloud.html">https://docs.aws.amazon.com/whitepapers/latest/disaster-recovery-workloads-on-aws/disaster-recovery-options-in-the-cloud.html</a></li>
+<li>SQS FIFO: <a href="https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-fifo-queues.html">https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-fifo-queues.html</a></li>
+<li>Route 53 failover: <a href="https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/dns-failover.html">https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/dns-failover.html</a></li>
+<li>DynamoDB Global Tables: <a href="https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/GlobalTables.html">https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/GlobalTables.html</a></li>
+<li>EFS: <a href="https://docs.aws.amazon.com/efs/latest/ug/whatisefs.html">https://docs.aws.amazon.com/efs/latest/ug/whatisefs.html</a></li>
+</ul>
+</div>
+</div>
+</div>
+<div id="outline-container-orgbb35e91" class="outline-2">
+<h2 id="orgbb35e91"><span class="section-number-2">4.</span> Domain 3: Design High-Performing Architectures <code>[24%]</code></h2>
+<div class="outline-text-2" id="text-4">
+</div>
+<div id="outline-container-org01b85af" class="outline-3">
+<h3 id="org01b85af"><span class="section-number-3">4.1.</span> Core Architectural Patterns &amp; Service Pairings</h3>
+<div class="outline-text-3" id="text-4-1">
+</div>
+<div id="outline-container-orgded9464" class="outline-4">
+<h4 id="orgded9464"><span class="section-number-4">4.1.1.</span> Caching ladder (edge → app → data)</h4>
+<div class="outline-text-4" id="text-4-1-1">
+<ul class="org-ul">
+<li><b>CloudFront</b>: cache static + dynamic content at edge; pairs with S3 (static) and ALB/API Gateway (dynamic).</li>
+<li><b>Global Accelerator</b>: NOT a cache — anycast static IPs + AWS backbone routing for <b>TCP/UDP</b>, non-HTTP workloads (gaming, VoIP), instant Regional failover, "static IP" requirement.</li>
+<li><b>ElastiCache Redis</b>: app-level cache, session store, leaderboards (sorted sets), pub/sub, replication + persistence. <b>Memcached</b>: simple, multi-threaded, no persistence/replication.</li>
+<li><b>DAX</b>: transparent DynamoDB cache, <b>microsecond</b> reads, zero code change for the DynamoDB API. ElastiCache in front of DynamoDB requires app changes — DAX wins when "no application changes."</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org379e64d" class="outline-4">
+<h4 id="org379e64d"><span class="section-number-4">4.1.2.</span> Database right-sizing</h4>
+<div class="outline-text-4" id="text-4-1-2">
+<ul class="org-ul">
+<li><b>DynamoDB</b>: single-digit-ms at any scale, on-demand vs provisioned+auto scaling; Global Tables for multi-Region; Streams for CDC.</li>
+<li><b>Aurora</b>: up to 15 low-latency replicas, reader endpoint load balancing; <b>Aurora Serverless v2</b> for spiky/unpredictable relational load.</li>
+<li><b>RDS read replicas</b>: scale reads; route analytics/BI to a replica so it never touches the primary.</li>
+<li><b>Redshift</b>: OLAP warehouse, columnar; <b>Redshift Spectrum / Athena</b> to query S3 directly (Athena = serverless, per-TB-scanned, "query logs in S3 with SQL").</li>
+<li><b>OpenSearch</b>: full-text search, log analytics dashboards.</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org67013a0" class="outline-4">
+<h4 id="org67013a0"><span class="section-number-4">4.1.3.</span> Storage performance</h4>
+<div class="outline-text-4" id="text-4-1-3">
+<ul class="org-ul">
+<li><b>EBS gp3</b>: baseline 3,000 IOPS/125 MBps, provision IOPS/throughput independently of size — default choice, cheaper than gp2.</li>
+<li><b>io1/io2 Block Express</b>: &gt;16,000 IOPS, sub-ms, <b>Multi-Attach</b> capable, mission-critical DBs.</li>
+<li><b>Instance Store</b>: highest IOPS (NVMe, millions), <b>ephemeral</b> — cache/scratch/buffer only.</li>
+<li><b>EFS</b>: elastic throughput modes; <b>FSx for Lustre</b>: HPC/ML, hundreds of GBps, native S3 integration ("process S3 data with high-performance POSIX FS"); <b>FSx for Windows</b>: SMB + Active Directory; <b>FSx for NetApp ONTAP</b>: multi-protocol NFS+SMB.</li>
+<li><b>S3 performance</b>: 3,500 PUT / 5,500 GET per second <b>per prefix</b> — parallelize with prefixes; <b>multipart upload</b> for &gt;100 MB; <b>Transfer Acceleration</b> for long-distance uploads into one bucket.</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org5c898b2" class="outline-4">
+<h4 id="org5c898b2"><span class="section-number-4">4.1.4.</span> Network performance</h4>
+<div class="outline-text-4" id="text-4-1-4">
+<ul class="org-ul">
+<li><b>Enhanced networking (ENA)</b>, <b>placement groups</b>: Cluster (low latency, same rack — HPC), Spread (isolate critical instances), Partition (distributed systems like Kafka/HDFS).</li>
+<li><b>NLB</b>: millions of req/s, static IP per AZ, ultra-low latency L4; <b>ALB</b>: L7 routing (path/host/header).</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgf8235e7" class="outline-4">
+<h4 id="orgf8235e7"><span class="section-number-4">4.1.5.</span> Streaming &amp; ingestion</h4>
+<div class="outline-text-4" id="text-4-1-5">
+<ul class="org-ul">
+<li><b>Kinesis Data Streams</b>: real-time, ms latency, replay, multiple consumers, shard-based.</li>
+<li><b>Data Firehose</b>: near-real-time (buffered) delivery to S3/Redshift/OpenSearch — zero administration, no replay. "Load streaming data into S3 with least effort" = Firehose.</li>
+<li><b>MSK</b>: when the requirement literally says Kafka.</li>
+</ul>
+</div>
+</div>
+</div>
+<div id="outline-container-orgf28c050" class="outline-3">
+<h3 id="orgf28c050"><span class="section-number-3">4.2.</span> Scenario Keyword Decoder ("Exam Buzzword Matrix")</h3>
+<div class="outline-text-3" id="text-4-2">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">Scenario Trigger Phrase</th>
+<th scope="col" class="org-left">Target Service / Architecture Pattern</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">"Microsecond latency for DynamoDB reads, no code changes"</td>
+<td class="org-left">DAX</td>
+</tr>
+
+<tr>
+<td class="org-left">"Sub-millisecond global reads/writes, key-value"</td>
+<td class="org-left">DynamoDB Global Tables (+ DAX)</td>
+</tr>
+
+<tr>
+<td class="org-left">"Static IP addresses for global users / non-HTTP (TCP-UDP)"</td>
+<td class="org-left">Global Accelerator</td>
+</tr>
+
+<tr>
+<td class="org-left">"Cache content close to users worldwide"</td>
+<td class="org-left">CloudFront</td>
+</tr>
+
+<tr>
+<td class="org-left">"Reduce load on RDS from repeated identical queries"</td>
+<td class="org-left">ElastiCache (lazy loading / write-through)</td>
+</tr>
+
+<tr>
+<td class="org-left">"Store user sessions outside instances"</td>
+<td class="org-left">ElastiCache Redis (or DynamoDB)</td>
+</tr>
+
+<tr>
+<td class="org-left">"Query data in S3 using standard SQL, serverless"</td>
+<td class="org-left">Athena (+ Glue Data Catalog)</td>
+</tr>
+
+<tr>
+<td class="org-left">"HPC / ML training needs fast access to S3 data"</td>
+<td class="org-left">FSx for Lustre (S3-linked)</td>
+</tr>
+
+<tr>
+<td class="org-left">"Windows shared storage with Active Directory"</td>
+<td class="org-left">FSx for Windows File Server</td>
+</tr>
+
+<tr>
+<td class="org-left">"Lowest network latency between tightly-coupled nodes"</td>
+<td class="org-left">Cluster Placement Group + Enhanced Networking</td>
+</tr>
+
+<tr>
+<td class="org-left">"Millions of requests/sec, ultra-low latency load balancing"</td>
+<td class="org-left">NLB</td>
+</tr>
+
+<tr>
+<td class="org-left">"Ingest streaming data into S3/Redshift with no admin"</td>
+<td class="org-left">Kinesis Data Firehose</td>
+</tr>
+
+<tr>
+<td class="org-left">"Real-time processing, replay, multiple consumers"</td>
+<td class="org-left">Kinesis Data Streams</td>
+</tr>
+
+<tr>
+<td class="org-left">"Speed up uploads from global offices to one S3 bucket"</td>
+<td class="org-left">S3 Transfer Acceleration (multipart for big files)</td>
+</tr>
+
+<tr>
+<td class="org-left">"Unpredictable/spiky relational workload"</td>
+<td class="org-left">Aurora Serverless v2</td>
+</tr>
+
+<tr>
+<td class="org-left">"Temporary scratch space with highest possible IOPS"</td>
+<td class="org-left">Instance Store</td>
+</tr>
+
+<tr>
+<td class="org-left">"&gt;16,000 IOPS on a single EBS volume"</td>
+<td class="org-left">io2 (gp3 caps at 16k)</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="outline-container-org9dd00f0" class="outline-3">
+<h3 id="org9dd00f0"><span class="section-number-3">4.3.</span> Tricky Scenarios &amp; Distractor Analysis</h3>
+<div class="outline-text-3" id="text-4-3">
+</div>
+<div id="outline-container-org08269f7" class="outline-4">
+<h4 id="org08269f7"><span class="section-number-4">4.3.1.</span> Scenario 1: CloudFront vs Global Accelerator</h4>
+<div class="outline-text-4" id="text-4-3-1">
+<ol class="org-ol">
+<li><b>Requirement</b>: A multiplayer game uses custom UDP on EC2 behind NLBs in two Regions. Global players report high latency and the client must connect to fixed IPs allow-listed by corporate firewalls.</li>
+<li><b>Correct Architecture</b>: <b>AWS Global Accelerator</b> in front of the NLBs — two static anycast IPs, traffic enters the AWS backbone at the nearest edge, automatic health-based Regional failover, full UDP support.</li>
+<li><b>Why Distractors Fail</b>:
+<ul class="org-ul">
+<li><i>CloudFront</i>: HTTP/HTTPS only, no UDP, IPs are not static — fails two hard requirements. (CloudFront wins when the content is cacheable web content.)</li>
+<li><i>Route 53 latency routing alone</i>: DNS-based, subject to client TTL caching, still traverses public internet, IPs change.</li>
+<li><i>Third NLB in another Region</i>: doesn't address global routing or static IPs.</li>
+</ul></li>
+</ol>
+</div>
+</div>
+<div id="outline-container-orgf84a748" class="outline-4">
+<h4 id="orgf84a748"><span class="section-number-4">4.3.2.</span> Scenario 2: Read-heavy DynamoDB with a caching constraint</h4>
+<div class="outline-text-4" id="text-4-3-2">
+<ol class="org-ol">
+<li><b>Requirement</b>: A product-catalog API on DynamoDB suffers from read hot spots during flash sales. Reads must drop to microseconds <b>without modifying application code</b> (app uses the standard DynamoDB SDK).</li>
+<li><b>Correct Architecture</b>: <b>DynamoDB Accelerator (DAX)</b> cluster; point the SDK endpoint at DAX — API-compatible write-through/read-through cache.</li>
+<li><b>Why Distractors Fail</b>:
+<ul class="org-ul">
+<li><i>ElastiCache Redis</i>: requires writing cache-aside logic (check cache → fall back to DB → populate) — violates "no code changes."</li>
+<li><i>Increase RCUs or switch to on-demand</i>: raises the cost ceiling but latency stays single-digit <b>milliseconds</b>, not microseconds.</li>
+<li><i>Global Tables</i>: multi-Region replication solves geography, not per-item read latency.</li>
+</ul></li>
+</ol>
+</div>
+</div>
+<div id="outline-container-orgc8e4cf9" class="outline-4">
+<h4 id="orgc8e4cf9"><span class="section-number-4">4.3.3.</span> Scenario 3: Ad-hoc SQL on logs in S3</h4>
+<div class="outline-text-4" id="text-4-3-3">
+<ol class="org-ol">
+<li><b>Requirement</b>: Analysts need occasional SQL queries over TBs of JSON/CSV logs already in S3, with minimal infrastructure and cost tied to usage.</li>
+<li><b>Correct Architecture</b>: <b>Athena</b> with a <b>Glue crawler/Data Catalog</b>; convert to <b>Parquet + partition by date</b> to cut per-query scan cost dramatically.</li>
+<li><b>Why Distractors Fail</b>:
+<ul class="org-ul">
+<li><i>Redshift cluster + COPY</i>: always-on warehouse cost + ETL overhead for "occasional" queries; Redshift is right for constant, complex BI workloads.</li>
+<li><i>RDS + import scripts</i>: relational store isn't built for TB-scale scans; heavy ops.</li>
+<li><i>OpenSearch</i>: great for full-text/log dashboards, but the ask is ad-hoc SQL, and cluster management violates "minimal infrastructure."</li>
+</ul></li>
+</ol>
+</div>
+</div>
+</div>
+<div id="outline-container-org24b77dc" class="outline-3">
+<h3 id="org24b77dc"><span class="section-number-3">4.4.</span> Visual Architecture Diagram</h3>
+<div class="outline-text-3" id="text-4-4">
+<div class="org-src-container">
+<pre class="src src-mermaid">flowchart LR
+    U[Global Users] --&gt; CF[CloudFront&lt;br/&gt;web/cacheable]
+    U --&gt; GA[Global Accelerator&lt;br/&gt;TCP-UDP, static IPs]
+    CF --&gt; ALB[ALB]
+    GA --&gt; NLB[NLB]
+    ALB --&gt; App[App Tier - ASG]
+    NLB --&gt; Game[Game Servers&lt;br/&gt;Cluster Placement Group]
+    App --&gt; Redis[(ElastiCache Redis&lt;br/&gt;sessions + hot queries)]
+    App --&gt; DAX[DAX] --&gt; DDB[(DynamoDB)]
+    App --&gt; RDS[(Aurora Writer)]
+    RDS --&gt; RR[(Reader Endpoint&lt;br/&gt;up to 15 replicas)]
+    Logs[S3 Logs&lt;br/&gt;Parquet, partitioned] --&gt; Athena[Athena SQL]
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org2cf0abe" class="outline-3">
+<h3 id="org2cf0abe"><span class="section-number-3">4.5.</span> AWS Documentation Links</h3>
+<div class="outline-text-3" id="text-4-5">
+<ul class="org-ul">
+<li>DAX: <a href="https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/DAX.html">https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/DAX.html</a></li>
+<li>Global Accelerator vs CloudFront: <a href="https://docs.aws.amazon.com/global-accelerator/latest/dg/what-is-global-accelerator.html">https://docs.aws.amazon.com/global-accelerator/latest/dg/what-is-global-accelerator.html</a></li>
+<li>ElastiCache strategies: <a href="https://docs.aws.amazon.com/AmazonElastiCache/latest/dg/Strategies.html">https://docs.aws.amazon.com/AmazonElastiCache/latest/dg/Strategies.html</a></li>
+<li>EBS volume types: <a href="https://docs.aws.amazon.com/ebs/latest/userguide/ebs-volume-types.html">https://docs.aws.amazon.com/ebs/latest/userguide/ebs-volume-types.html</a></li>
+<li>Placement groups: <a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/placement-groups.html">https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/placement-groups.html</a></li>
+<li>S3 performance: <a href="https://docs.aws.amazon.com/AmazonS3/latest/userguide/optimizing-performance.html">https://docs.aws.amazon.com/AmazonS3/latest/userguide/optimizing-performance.html</a></li>
+<li>FSx for Lustre: <a href="https://docs.aws.amazon.com/fsx/latest/LustreGuide/what-is.html">https://docs.aws.amazon.com/fsx/latest/LustreGuide/what-is.html</a></li>
+<li>Athena: <a href="https://docs.aws.amazon.com/athena/latest/ug/what-is.html">https://docs.aws.amazon.com/athena/latest/ug/what-is.html</a></li>
+<li>Kinesis services comparison: <a href="https://docs.aws.amazon.com/streams/latest/dev/introduction.html">https://docs.aws.amazon.com/streams/latest/dev/introduction.html</a></li>
+</ul>
+</div>
+</div>
+</div>
+<div id="outline-container-org022b1e0" class="outline-2">
+<h2 id="org022b1e0"><span class="section-number-2">5.</span> Domain 4: Design Cost-Optimized Architectures <code>[20%]</code></h2>
+<div class="outline-text-2" id="text-5">
+</div>
+<div id="outline-container-orge35943c" class="outline-3">
+<h3 id="orge35943c"><span class="section-number-3">5.1.</span> Core Architectural Patterns &amp; Service Pairings</h3>
+<div class="outline-text-3" id="text-5-1">
+</div>
+<div id="outline-container-org4b17b10" class="outline-4">
+<h4 id="org4b17b10"><span class="section-number-4">5.1.1.</span> Compute purchasing ladder</h4>
+<div class="outline-text-4" id="text-5-1-1">
+<ul class="org-ul">
+<li><b>On-Demand</b>: baseline, unpredictable short-term.</li>
+<li><b>Savings Plans / Reserved Instances</b> (1–3 yr): steady-state 24/7 workloads (~up to 72% off). Compute Savings Plans = most flexible (EC2 + Fargate + Lambda).</li>
+<li><b>Spot</b> (~up to 90% off): fault-tolerant, interruptible — batch, CI, big data, stateless workers. 2-minute interruption notice. <b>Never</b> for databases or stateful single instances.</li>
+<li><b>Mixed ASG pattern</b>: baseline capacity on RIs/Savings Plans + burst on Spot (capacity-optimized allocation).</li>
+<li><b>Lambda/Fargate</b>: pay-per-use — wins when workload is idle most of the time ("runs a few minutes per day/hour").</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org950a213" class="outline-4">
+<h4 id="org950a213"><span class="section-number-4">5.1.2.</span> S3 storage class ladder (know retrieval semantics cold)</h4>
+<div class="outline-text-4" id="text-5-1-2">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">Class</th>
+<th scope="col" class="org-left">Retrieval</th>
+<th scope="col" class="org-left">Use case / trap</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">Standard</td>
+<td class="org-left">ms</td>
+<td class="org-left">Hot data</td>
+</tr>
+
+<tr>
+<td class="org-left">Intelligent-Tiering</td>
+<td class="org-left">ms</td>
+<td class="org-left"><b>Unknown/changing access patterns</b>, no retrieval fees</td>
+</tr>
+
+<tr>
+<td class="org-left">Standard-IA</td>
+<td class="org-left">ms</td>
+<td class="org-left">Infrequent but <b>immediate</b> access; 30-day min</td>
+</tr>
+
+<tr>
+<td class="org-left">One Zone-IA</td>
+<td class="org-left">ms</td>
+<td class="org-left">Re-creatable data only (single AZ!)</td>
+</tr>
+
+<tr>
+<td class="org-left">Glacier Instant Retrieval</td>
+<td class="org-left">ms</td>
+<td class="org-left">Archive accessed ~quarterly, needs <b>instant</b> access</td>
+</tr>
+
+<tr>
+<td class="org-left">Glacier Flexible</td>
+<td class="org-left">minutes–hours (1–12h)</td>
+<td class="org-left">Archive, retrieval within hours OK; 90-day min</td>
+</tr>
+
+<tr>
+<td class="org-left">Glacier Deep Archive</td>
+<td class="org-left">hours (12–48h)</td>
+<td class="org-left">Compliance/7-10yr retention, cheapest; 180-day min</td>
+</tr>
+</tbody>
+</table>
+<ul class="org-ul">
+<li><b>Lifecycle policies</b> automate transitions + expire old versions/incomplete multipart uploads.</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgd340982" class="outline-4">
+<h4 id="orgd340982"><span class="section-number-4">5.1.3.</span> Network cost traps</h4>
+<div class="outline-text-4" id="text-5-1-3">
+<ul class="org-ul">
+<li><b>NAT Gateway</b>: hourly + per-GB — replace S3/DynamoDB traffic with a <b>free Gateway VPC Endpoint</b>.</li>
+<li>Cross-AZ data transfer costs money; same-AZ is free — but don't sacrifice HA for it unless the question says so.</li>
+<li><b>CloudFront</b> egress is cheaper than S3/EC2 direct egress and has free origin fetches — "reduce S3 data-transfer cost for popular content" = CloudFront.</li>
+<li>One NAT Gateway per AZ = HA; a single shared NAT GW = cheaper but an AZ-failure risk — the question's priority (cost vs resilience) decides.</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgf9e7d69" class="outline-4">
+<h4 id="orgf9e7d69"><span class="section-number-4">5.1.4.</span> Database &amp; analytics cost</h4>
+<div class="outline-text-4" id="text-5-1-4">
+<ul class="org-ul">
+<li><b>Aurora Serverless v2</b>: intermittent/unpredictable workloads (dev/test, spiky SaaS).</li>
+<li>Stop RDS dev/test instances off-hours (Instance Scheduler); RDS storage still billed.</li>
+<li><b>DynamoDB on-demand</b> for spiky/unknown traffic; provisioned + auto scaling for steady traffic (cheaper at scale).</li>
+<li><b>Athena over Redshift</b> for occasional queries; <b>S3 + Athena over keeping data in expensive stores</b>.</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org81eb080" class="outline-4">
+<h4 id="org81eb080"><span class="section-number-4">5.1.5.</span> Visibility &amp; governance</h4>
+<div class="outline-text-4" id="text-5-1-5">
+<ul class="org-ul">
+<li><b>Cost Explorer</b> (analyze + RI/SP recommendations), <b>AWS Budgets</b> (alerts/actions), <b>Cost &amp; Usage Report</b> (detailed, to S3), <b>Compute Optimizer</b> (right-sizing ML recommendations), <b>Trusted Advisor</b> (idle resources, underutilized checks), <b>cost allocation tags</b> per team/project.</li>
+</ul>
+</div>
+</div>
+</div>
+<div id="outline-container-org22047e3" class="outline-3">
+<h3 id="org22047e3"><span class="section-number-3">5.2.</span> Scenario Keyword Decoder ("Exam Buzzword Matrix")</h3>
+<div class="outline-text-3" id="text-5-2">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">Scenario Trigger Phrase</th>
+<th scope="col" class="org-left">Target Service / Architecture Pattern</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">"Fault-tolerant batch jobs, lowest compute cost"</td>
+<td class="org-left">Spot Instances (or Spot Fleet / EC2 in Batch)</td>
+</tr>
+
+<tr>
+<td class="org-left">"Steady 24/7 workload for the next 1-3 years"</td>
+<td class="org-left">Savings Plans / Reserved Instances</td>
+</tr>
+
+<tr>
+<td class="org-left">"Runs a few minutes per hour / mostly idle"</td>
+<td class="org-left">Lambda (or Fargate for containers)</td>
+</tr>
+
+<tr>
+<td class="org-left">"Unknown or changing S3 access patterns"</td>
+<td class="org-left">S3 Intelligent-Tiering</td>
+</tr>
+
+<tr>
+<td class="org-left">"Archive, must retrieve within milliseconds occasionally"</td>
+<td class="org-left">S3 Glacier Instant Retrieval</td>
+</tr>
+
+<tr>
+<td class="org-left">"Compliance archive for 7-10 years, rarely accessed"</td>
+<td class="org-left">S3 Glacier Deep Archive</td>
+</tr>
+
+<tr>
+<td class="org-left">"Infrequently accessed but must be immediately available"</td>
+<td class="org-left">S3 Standard-IA</td>
+</tr>
+
+<tr>
+<td class="org-left">"Easily re-creatable infrequent data, cheapest ms access"</td>
+<td class="org-left">S3 One Zone-IA</td>
+</tr>
+
+<tr>
+<td class="org-left">"High NAT Gateway data-processing charges (S3/DynamoDB)"</td>
+<td class="org-left">Gateway VPC Endpoint</td>
+</tr>
+
+<tr>
+<td class="org-left">"Reduce S3 data-transfer-out cost for frequently viewed files"</td>
+<td class="org-left">CloudFront in front of S3</td>
+</tr>
+
+<tr>
+<td class="org-left">"Right-size over-provisioned EC2 instances"</td>
+<td class="org-left">AWS Compute Optimizer</td>
+</tr>
+
+<tr>
+<td class="org-left">"Alert when spend exceeds a threshold"</td>
+<td class="org-left">AWS Budgets</td>
+</tr>
+
+<tr>
+<td class="org-left">"Attribute costs to teams/projects"</td>
+<td class="org-left">Cost allocation tags + Cost Explorer</td>
+</tr>
+
+<tr>
+<td class="org-left">"Dev/test databases only used during business hours"</td>
+<td class="org-left">Stop instances on schedule / Aurora Serverless</td>
+</tr>
+
+<tr>
+<td class="org-left">"Spiky unpredictable DynamoDB traffic"</td>
+<td class="org-left">On-demand capacity mode</td>
+</tr>
+
+<tr>
+<td class="org-left">"License-included vs BYOL cost decisions / dedicated hardware"</td>
+<td class="org-left">Dedicated Hosts (BYOL, per-socket licensing)</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="outline-container-org21d2731" class="outline-3">
+<h3 id="org21d2731"><span class="section-number-3">5.3.</span> Tricky Scenarios &amp; Distractor Analysis</h3>
+<div class="outline-text-3" id="text-5-3">
+</div>
+<div id="outline-container-org59593a2" class="outline-4">
+<h4 id="org59593a2"><span class="section-number-4">5.3.1.</span> Scenario 1: The lifecycle-policy compliance trap</h4>
+<div class="outline-text-4" id="text-5-3-1">
+<ol class="org-ol">
+<li><b>Requirement</b>: Regulatory documents are uploaded daily, frequently accessed for 30 days, occasionally (but immediately) needed for 6 months, then retained 7 years and retrieved at most once a year with 24 hours' notice.</li>
+<li><b>Correct Architecture</b>: Lifecycle policy — S3 Standard (0–30d) → <b>Standard-IA</b> (30d–180d) → <b>Glacier Deep Archive</b> (180d–7y, expiration after). Deep Archive's 12h standard retrieval fits "24 hours' notice."</li>
+<li><b>Why Distractors Fail</b>:
+<ul class="org-ul">
+<li><i>Straight to Glacier Flexible at day 30</i>: retrieval takes minutes-to-hours — fails "immediately needed" during months 1–6.</li>
+<li><i>Glacier Instant Retrieval for the 7-year tier</i>: works functionally but costs ~4x Deep Archive; "at most once a year, 24h notice" signals the cheapest tier.</li>
+<li><i>One Zone-IA for compliance docs</i>: single-AZ storage for irreplaceable regulated data — resilience fail.</li>
+<li><i>Intelligent-Tiering</i>: reasonable if the pattern were "unknown," but the pattern is explicitly known — a defined lifecycle is cheaper (no monitoring fee).</li>
+</ul></li>
+</ol>
+</div>
+</div>
+<div id="outline-container-org0a92def" class="outline-4">
+<h4 id="org0a92def"><span class="section-number-4">5.3.2.</span> Scenario 2: The $10k NAT Gateway bill</h4>
+<div class="outline-text-4" id="text-5-3-2">
+<ol class="org-ol">
+<li><b>Requirement</b>: Private-subnet EC2 fleet moves ~50 TB/month to S3 via a NAT Gateway. Reduce cost with no impact on functionality.</li>
+<li><b>Correct Architecture</b>: Add a <b>Gateway VPC Endpoint for S3</b> and update private route tables — S3 traffic bypasses NAT entirely; endpoint is free with no per-GB charge.</li>
+<li><b>Why Distractors Fail</b>:
+<ul class="org-ul">
+<li><i>Interface endpoint for S3</i>: works but adds hourly + per-GB PrivateLink charges — not the cheapest when a gateway endpoint exists.</li>
+<li><i>Bigger/multiple NAT Gateways</i>: NAT pricing is per-GB processed; scaling it changes nothing.</li>
+<li><i>Move instances to public subnets with public IPs</i>: removes NAT cost but changes security posture — "no impact" is violated; instant red flag.</li>
+</ul></li>
+</ol>
+</div>
+</div>
+<div id="outline-container-orgb06ac85" class="outline-4">
+<h4 id="orgb06ac85"><span class="section-number-4">5.3.3.</span> Scenario 3: Spot vs everything else</h4>
+<div class="outline-text-4" id="text-5-3-3">
+<ol class="org-ol">
+<li><b>Requirement</b>: Nightly video-transcoding jobs take 4–6 hours, can be checkpointed/restarted, and must run at the lowest possible compute cost.</li>
+<li><b>Correct Architecture</b>: <b>Spot Instances</b> (via ASG mixed-instances policy or AWS Batch with Spot), diversified across instance types/AZs, checkpoint progress to S3 so 2-minute interruptions are harmless.</li>
+<li><b>Why Distractors Fail</b>:
+<ul class="org-ul">
+<li><i>Reserved Instances</i>: commit to 24/7 pricing for a job that runs ~25% of the day and tolerates interruption — Spot is far cheaper.</li>
+<li><i>On-Demand with scheduled scaling</i>: better than always-on, but ignores the interruption tolerance the question deliberately gave you (that phrase <b>is</b> the Spot signal).</li>
+<li><i>Lambda</i>: 15-minute max execution — disqualified for multi-hour jobs.</li>
+</ul></li>
+</ol>
+</div>
+</div>
+</div>
+<div id="outline-container-orgaf3e81a" class="outline-3">
+<h3 id="orgaf3e81a"><span class="section-number-3">5.4.</span> Visual Architecture Diagram</h3>
+<div class="outline-text-3" id="text-5-4">
+<div class="org-src-container">
+<pre class="src src-mermaid">flowchart LR
+    subgraph Compute Cost Ladder
+        SP[Baseline 24/7&lt;br/&gt;Savings Plans] --&gt; OD[Variable&lt;br/&gt;On-Demand] --&gt; SPOT[Interruptible batch&lt;br/&gt;Spot ~90 percent off]
+    end
+    subgraph Storage Lifecycle
+        S3S[S3 Standard&lt;br/&gt;0-30d] --&gt; IA[Standard-IA&lt;br/&gt;30-180d] --&gt; DA[Glacier Deep Archive&lt;br/&gt;7 yr retention]
+    end
+    EC2[Private EC2 Fleet] --&gt;|Gateway Endpoint - free| S3S
+    EC2 -.-&gt;|NAT GW per-GB fees&lt;br/&gt;AVOID for S3| NAT[NAT Gateway]
+    Users[Viewers] --&gt; CFront[CloudFront&lt;br/&gt;cheaper egress] --&gt; S3S
+    CE[Cost Explorer + Budgets&lt;br/&gt;+ Compute Optimizer] -.monitor/right-size.-&gt; EC2
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-orgae15f41" class="outline-3">
+<h3 id="orgae15f41"><span class="section-number-3">5.5.</span> AWS Documentation Links</h3>
+<div class="outline-text-3" id="text-5-5">
+<ul class="org-ul">
+<li>S3 storage classes: <a href="https://docs.aws.amazon.com/AmazonS3/latest/userguide/storage-class-intro.html">https://docs.aws.amazon.com/AmazonS3/latest/userguide/storage-class-intro.html</a></li>
+<li>Lifecycle configuration: <a href="https://docs.aws.amazon.com/AmazonS3/latest/userguide/object-lifecycle-mgmt.html">https://docs.aws.amazon.com/AmazonS3/latest/userguide/object-lifecycle-mgmt.html</a></li>
+<li>Spot best practices: <a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/spot-best-practices.html">https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/spot-best-practices.html</a></li>
+<li>Savings Plans: <a href="https://docs.aws.amazon.com/savingsplans/latest/userguide/what-is-savings-plans.html">https://docs.aws.amazon.com/savingsplans/latest/userguide/what-is-savings-plans.html</a></li>
+<li>NAT Gateway pricing behavior: <a href="https://docs.aws.amazon.com/vpc/latest/userguide/vpc-nat-gateway.html">https://docs.aws.amazon.com/vpc/latest/userguide/vpc-nat-gateway.html</a></li>
+<li>Compute Optimizer: <a href="https://docs.aws.amazon.com/compute-optimizer/latest/ug/what-is-compute-optimizer.html">https://docs.aws.amazon.com/compute-optimizer/latest/ug/what-is-compute-optimizer.html</a></li>
+<li>AWS Budgets: <a href="https://docs.aws.amazon.com/cost-management/latest/userguide/budgets-managing-costs.html">https://docs.aws.amazon.com/cost-management/latest/userguide/budgets-managing-costs.html</a></li>
+<li>DynamoDB capacity modes: <a href="https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/HowItWorks.ReadWriteCapacityMode.html">https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/HowItWorks.ReadWriteCapacityMode.html</a></li>
+</ul>
+</div>
+</div>
+</div>
+<div id="outline-container-org4f94bdd" class="outline-2">
+<h2 id="org4f94bdd"><span class="section-number-2">6.</span> Cross-Domain Rapid-Fire Elimination Table</h2>
+<div class="outline-text-2" id="text-6">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">If the question says&#x2026;</th>
+<th scope="col" class="org-left">Immediately eliminate&#x2026;</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">"Least operational overhead"</td>
+<td class="org-left">Anything self-managed on EC2 (self-hosted Kafka, MySQL&#x2026;)</td>
+</tr>
+
+<tr>
+<td class="org-left">"No application code changes"</td>
+<td class="org-left">Cache-aside ElastiCache, custom proxies</td>
+</tr>
+
+<tr>
+<td class="org-left">"Interruption-tolerant"</td>
+<td class="org-left">On-Demand/RI as the "cheapest" answer (it's Spot)</td>
+</tr>
+
+<tr>
+<td class="org-left">"Automatic failover" (RDS)</td>
+<td class="org-left">Read Replicas as the HA answer</td>
+</tr>
+
+<tr>
+<td class="org-left">"UDP" or "static IP"</td>
+<td class="org-left">CloudFront</td>
+</tr>
+
+<tr>
+<td class="org-left">"Shared storage across AZs"</td>
+<td class="org-left">EBS</td>
+</tr>
+
+<tr>
+<td class="org-left">"Exactly-once, ordered"</td>
+<td class="org-left">SQS Standard, SNS alone</td>
+</tr>
+
+<tr>
+<td class="org-left">"Access S3 privately at no extra cost"</td>
+<td class="org-left">NAT Gateway, Interface endpoint</td>
+</tr>
+
+<tr>
+<td class="org-left">"Encrypt + audit key usage"</td>
+<td class="org-left">SSE-S3 (pick SSE-KMS)</td>
+</tr>
+
+<tr>
+<td class="org-left">"Job runs &gt; 15 minutes"</td>
+<td class="org-left">Lambda</td>
+</tr>
+
+<tr>
+<td class="org-left">"Third-party cross-account access"</td>
+<td class="org-left">IAM users with shared keys</td>
+</tr>
+
+<tr>
+<td class="org-left">"Cheapest archive, retrieval in hours is fine"</td>
+<td class="org-left">Glacier Instant Retrieval, Standard-IA</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="author">Author: Compiled for exam prep (Stephane Maarek course companion)</p>
+<p class="date">Created: 2026-08-24 Mon 09:18</p>
+<p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>
