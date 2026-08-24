@@ -1,0 +1,8 @@
+#!/bin/sh
+# Keeps committed html/ in sync with the .org sources it's exported from.
+# Not installed automatically: `make install-hooks` (or
+# `git config core.hooksPath githooks`) points git at this directory.
+set -e
+
+make export
+git add html

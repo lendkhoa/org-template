@@ -17,6 +17,7 @@ export.
 | =org-themes/readtheorg_theme/css/=          | =htmlize.css= (syntax colors), =readtheorg.css= (layout) |
 | =org-themes/readtheorg_theme/js/=           | =readtheorg.js= (TOC behavior)                       |
 | =Makefile=                                  | =make export= builds all =.org= files into =html/=  |
+| =githooks/pre-commit=                       | Runs =make export= and stages =html/= before every commit; enable with =make install-hooks= |
 | =html/=                                     | Generated output: exported HTML + a copy of =org-themes/= alongside it |
 | =wrangler.toml=                             | Tells Cloudflare's Worker build to serve static assets from =html/= |
 
@@ -50,6 +51,9 @@ hand-edit anything inside it.
      #+begin_src sh
        emacs --batch template.org -f org-html-export-to-html
      #+end_src
+4. Optional: =make install-hooks= points git at =githooks/=, so every commit
+   runs =make export= and stages =html/= automatically — no more forgetting
+   to regenerate it before pushing.
 
 All paths in =theme-readtheorg.setup= are relative to the =.org= file, so
 keep the =org-themes/= folder alongside it when exporting by hand.
