@@ -64,10 +64,7 @@ $( document ).ready(function() {
     var $tableOfContents = $('#table-of-contents');
     $tableOfContents.css({paddingBottom: $postamble.outerHeight()});
 
-    // The TOC is a floating overlay drawer at every viewport width: a
-    // persistent hamburger button toggles it open/closed, a dimmed backdrop
-    // sits behind it, and it's closed by default so #content always gets
-    // the full screen until the reader asks for the drawer.
+    // add a persistent button that toggles the TOC sidebar open/closed
     var TOC_STORAGE_KEY = 'org-toc-collapsed';
     var $body = $('body');
     var $sidebarToggle = $('<div id="sidebar-toggle" title="Toggle table of contents">&#9776;</div>');
@@ -82,7 +79,7 @@ $( document ).ready(function() {
     }
 
     var storedState = window.localStorage ? localStorage.getItem(TOC_STORAGE_KEY) : null;
-    var startCollapsed = storedState === null ? true : storedState === 'true';
+    var startCollapsed = storedState === null ? $(window).width() <= 768 : storedState === 'true';
     $body.toggleClass('sidebar-collapsed', startCollapsed);
 
     $sidebarToggle.on('click', function () {
@@ -92,10 +89,13 @@ $( document ).ready(function() {
         }
     });
 
-    // Click the dimmed empty screen behind the open drawer to close it.
+    // Click the dimmed empty screen behind the open sidebar to close it.
+    // Only visible/clickable on narrow screens (see #sidebar-backdrop in
+    // readtheorg.css) -- on desktop the sidebar docks and #content shifts
+    // for it, so there's no overlay to dismiss.
     $sidebarBackdrop.on('click', closeSidebar);
 
-    // auto-collapse after following a TOC link
+    // auto-collapse after following a TOC link on narrow screens
     $tableOfContents.on('click', 'a', function () {
         // expand any collapsed section(s) the target heading lives in,
         // otherwise the browser would jump to a `display:none' element
@@ -104,7 +104,9 @@ $( document ).ready(function() {
             $(hash).parents('[id^="outline-container-"]').removeClass('section-collapsed');
         }
 
-        closeSidebar();
+        if ($(window).width() <= 768) {
+            closeSidebar();
+        }
     });
 });
 

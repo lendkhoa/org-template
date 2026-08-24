@@ -60,16 +60,14 @@ body{
     word-wrap:break-word;
 }
 
-/* The TOC sidebar is a floating overlay drawer (see #table-of-contents
-   below), not a docked column, so #content never gives up margin to it and
-   always spans the full width with a minimal, Linear-style gutter. */
 #content{
     background:#fcfcfc;
     height:100%;
-    margin-left:0;
-    max-width:100%;
+    margin-left:300px;
+    max-width:calc(100% - 4em);
     min-height:100%;
-    padding:1.618em clamp(1rem, 4vw, 3rem);
+    padding:1.618em 3.236em;
+    transition:margin-left 0.25s ease;
 }
 
 p{
@@ -226,6 +224,8 @@ dl dd{
 }
 
 @media only screen and (max-width: 480px){
+    #content{
+        padding:1em}
 }
 
 @media screen and (max-width: 768px){
@@ -242,6 +242,10 @@ dl dd{
 }
 
 @media screen and (max-width: 768px){
+    #content{
+        margin-left:0;
+        padding:1.618em}
+
     #content.shift{
         position:fixed;
         min-width:100%;
@@ -531,43 +535,18 @@ table tr:nth-child(2n) td{
     transform:rotate(270deg);
 }
 
-/* The TOC is a floating overlay drawer at every viewport width: off-canvas
-   by default (also the pre-JS-flash state, so it never covers the page
-   before readtheorg.js applies the stored/computed collapsed state), and
-   slid into view only while body lacks .sidebar-collapsed. #content never
-   shifts for it, so a wide viewport doesn't need its own docked layout. */
-#table-of-contents {
-    transform:translateX(-100%);
-}
-
-body:not(.sidebar-collapsed) #table-of-contents {
-    transform:translateX(0);
-}
-
-/* Dims and blocks the rest of the page while the drawer is open; clicking
-   it (readtheorg.js) is the "click the empty screen to close" gesture. */
+/* Hidden on desktop, where the sidebar docks and #content shifts to make
+   room for it instead of overlaying anything. Only below the tablet
+   breakpoint (see the media query below) does it dim/block the page while
+   the sidebar is open, since there #content stays full-width underneath. */
 #sidebar-backdrop {
-    position:fixed;
-    top:0;
-    left:0;
-    width:100%;
-    height:100%;
-    background:rgba(0,0,0,0.4);
-    z-index:150;
-    opacity:0;
-    pointer-events:none;
-    transition:opacity 0.25s ease;
-}
-
-body:not(.sidebar-collapsed) #sidebar-backdrop {
-    opacity:1;
-    pointer-events:auto;
+    display:none;
 }
 
 #sidebar-toggle {
     position:fixed;
     top:0;
-    left:0;
+    left:300px;
     z-index:250;
     width:2.4em;
     height:2.4em;
@@ -578,17 +557,73 @@ body:not(.sidebar-collapsed) #sidebar-backdrop {
     font-size:1.2em;
     cursor:pointer;
     user-select:none;
-    transition:background-color 0.15s ease;
+    transition:left 0.25s ease, background-color 0.15s ease;
 }
 
 #sidebar-toggle:hover {
     background-color:#1f6698;
 }
 
+body.sidebar-collapsed #table-of-contents {
+    transform:translateX(-100%);
+}
+
+body.sidebar-collapsed #content {
+    margin-left:0;
+}
+
+body.sidebar-collapsed #sidebar-toggle {
+    left:0;
+}
+
+/* Off-canvas by default below the tablet breakpoint, so the 300px TOC
+   doesn't cover the page (and the toggle button isn't pushed off-screen)
+   before readtheorg.js has run to apply its own collapsed-by-default
+   logic. */
+@media screen and (max-width: 768px) {
+    #table-of-contents {
+        transform:translateX(-100%);
+    }
+
+    body:not(.sidebar-collapsed) #table-of-contents {
+        transform:translateX(0);
+    }
+
+    #sidebar-toggle {
+        left:0;
+    }
+
+    body:not(.sidebar-collapsed) #sidebar-toggle {
+        left:min(300px, 85vw);
+    }
+
+    /* Dims and blocks the rest of the page while the sidebar is open;
+       clicking it (readtheorg.js) is the "click the empty screen to
+       close" gesture. */
+    #sidebar-backdrop {
+        display:block;
+        position:fixed;
+        top:0;
+        left:0;
+        width:100%;
+        height:100%;
+        background:rgba(0,0,0,0.4);
+        z-index:150;
+        opacity:0;
+        pointer-events:none;
+        transition:opacity 0.25s ease;
+    }
+
+    body:not(.sidebar-collapsed) #sidebar-backdrop {
+        opacity:1;
+        pointer-events:auto;
+    }
+}
+
 /* darkmode-js sets no z-index of its own, so its fixed button inherits
    whatever stacking order the DOM happens to give it. Pin it above the
-   TOC drawer, its backdrop, and the postamble footer so it always floats
-   on top and the page scrolls underneath it instead of burying it. */
+   TOC sidebar and postamble footer so it always floats on top and the
+   page scrolls underneath it instead of burying it. */
 .darkmode-toggle {
     z-index:500;
 }
