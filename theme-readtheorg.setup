@@ -12,11 +12,13 @@
 
 #+HTML_HEAD: <link rel="stylesheet" href="./pagefind/pagefind-ui.css"/>
 #+HTML_HEAD: <script src="./pagefind/pagefind-ui.js"></script>
+#+HTML_HEAD: <script type="module" src="./pagefind/pagefind-highlight.js"></script>
 #+HTML_HEAD: <style>
 #+HTML_HEAD:   #pagefind-search-trigger {
 #+HTML_HEAD:     position: fixed;
-#+HTML_HEAD:     bottom: 32px;
-#+HTML_HEAD:     left: 32px;
+#+HTML_HEAD:     bottom: 16px;
+#+HTML_HEAD:     right: 32px;
+#+HTML_HEAD:     left: unset;
 #+HTML_HEAD:     z-index: 9998;
 #+HTML_HEAD:     padding: 8px 14px;
 #+HTML_HEAD:     border-radius: 20px;
@@ -72,7 +74,29 @@
 #+HTML_HEAD:     function openSearch() {
 #+HTML_HEAD:       overlay.classList.add('open');
 #+HTML_HEAD:       if (!initialized) {
-#+HTML_HEAD:         new PagefindUI({ element: '#pagefind-search-mount', showSubResults: true });
+#+HTML_HEAD:         new PagefindUI({
+#+HTML_HEAD:           element: '#pagefind-search-mount',
+#+HTML_HEAD:           showSubResults: true,
+#+HTML_HEAD:           // No thumbnail images exist in this site's content; without this
+#+HTML_HEAD:           // Pagefind still renders an empty thumb box, showing up as a
+#+HTML_HEAD:           // blank gap in front of every result.
+#+HTML_HEAD:           showImages: false,
+#+HTML_HEAD:           // Press "/" anywhere on the page to jump straight into search,
+#+HTML_HEAD:           // matching the ⌘K shortcut (GitHub/YouTube-style convenience).
+#+HTML_HEAD:           focusOnSlash: true,
+#+HTML_HEAD:           // Carry the current query onto the destination page via
+#+HTML_HEAD:           // ?highlight=, so pagefind-highlight.js can mark it there.
+#+HTML_HEAD:           processResult: function (result) {
+#+HTML_HEAD:             const input = mount.querySelector('input');
+#+HTML_HEAD:             const term = input ? input.value.trim() : '';
+#+HTML_HEAD:             if (term && result.url) {
+#+HTML_HEAD:               const url = new URL(result.url, window.location.href);
+#+HTML_HEAD:               url.searchParams.set('highlight', term);
+#+HTML_HEAD:               result.url = url.pathname + url.search + url.hash;
+#+HTML_HEAD:             }
+#+HTML_HEAD:             return result;
+#+HTML_HEAD:           }
+#+HTML_HEAD:         });
 #+HTML_HEAD:         initialized = true;
 #+HTML_HEAD:       }
 #+HTML_HEAD:       const input = mount.querySelector('input');
@@ -94,6 +118,12 @@
 #+HTML_HEAD:         closeSearch();
 #+HTML_HEAD:       }
 #+HTML_HEAD:     });
+#+HTML_HEAD:
+#+HTML_HEAD:     // Highlight the term that was searched for once we land on this
+#+HTML_HEAD:     // page from a result link (see processResult above).
+#+HTML_HEAD:     if (window.PagefindHighlight) {
+#+HTML_HEAD:       new PagefindHighlight({ highlightParam: 'highlight' });
+#+HTML_HEAD:     }
 #+HTML_HEAD:   }
 #+HTML_HEAD:   window.addEventListener('load', addPagefindSearch);
 #+HTML_HEAD: </script>

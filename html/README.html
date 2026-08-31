@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2026-08-30 Sun 19:02 -->
+<!-- 2026-08-30 Sun 21:45 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>org-template</title>
@@ -203,11 +203,13 @@
 <script type="text/javascript" src="./org-themes/lib/js/svg-pan-zoom.min.js"></script>
 <link rel="stylesheet" href="./pagefind/pagefind-ui.css"/>
 <script src="./pagefind/pagefind-ui.js"></script>
+<script type="module" src="./pagefind/pagefind-highlight.js"></script>
 <style>
 #pagefind-search-trigger {
 position: fixed;
-bottom: 32px;
-left: 32px;
+bottom: 16px;
+right: 32px;
+left: unset;
 z-index: 9998;
 padding: 8px 14px;
 border-radius: 20px;
@@ -263,7 +265,29 @@ let initialized = false;
 function openSearch() {
 overlay.classList.add('open');
 if (!initialized) {
-new PagefindUI({ element: '#pagefind-search-mount', showSubResults: true });
+new PagefindUI({
+element: '#pagefind-search-mount',
+showSubResults: true,
+// No thumbnail images exist in this site's content; without this
+// Pagefind still renders an empty thumb box, showing up as a
+// blank gap in front of every result.
+showImages: false,
+// Press "/" anywhere on the page to jump straight into search,
+// matching the ⌘K shortcut (GitHub/YouTube-style convenience).
+focusOnSlash: true,
+// Carry the current query onto the destination page via
+// ?highlight=, so pagefind-highlight.js can mark it there.
+processResult: function (result) {
+const input = mount.querySelector('input');
+const term = input ? input.value.trim() : '';
+if (term && result.url) {
+const url = new URL(result.url, window.location.href);
+url.searchParams.set('highlight', term);
+result.url = url.pathname + url.search + url.hash;
+}
+return result;
+}
+});
 initialized = true;
 }
 const input = mount.querySelector('input');
@@ -285,6 +309,12 @@ overlay.classList.contains('open') ? closeSearch() : openSearch();
 closeSearch();
 }
 });
+
+// Highlight the term that was searched for once we land on this
+// page from a result link (see processResult above).
+if (window.PagefindHighlight) {
+new PagefindHighlight({ highlightParam: 'highlight' });
+}
 }
 window.addEventListener('load', addPagefindSearch);
 </script>
@@ -325,12 +355,12 @@ window.addEventListener('load', addDarkmodeWidget);
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#org276fd4c">1. Structure</a></li>
-<li><a href="#org5d5b0be">2. Customizations vs. the stock readtheorg theme</a></li>
-<li><a href="#org26f520e">3. Usage</a></li>
-<li><a href="#org680aecf">4. Deployment (Cloudflare Workers Git integration + GitHub SSO)</a>
+<li><a href="#orgd3e97f6">1. Structure</a></li>
+<li><a href="#orga72070a">2. Customizations vs. the stock readtheorg theme</a></li>
+<li><a href="#orgc41eb81">3. Usage</a></li>
+<li><a href="#orgb0103e9">4. Deployment (Cloudflare Workers Git integration + GitHub SSO)</a>
 <ul>
-<li><a href="#org3c72e4d">4.1. One-time Cloudflare setup</a></li>
+<li><a href="#org75fb01f">4.1. One-time Cloudflare setup</a></li>
 </ul>
 </li>
 </ul>
@@ -341,8 +371,8 @@ Starter template for exporting Org-mode files to HTML with a customized
 readtheorg theme. Copy this folder wherever a new note needs styled HTML
 export.
 </p>
-<div id="outline-container-org276fd4c" class="outline-2">
-<h2 id="org276fd4c"><span class="section-number-2">1.</span> Structure</h2>
+<div id="outline-container-orgd3e97f6" class="outline-2">
+<h2 id="orgd3e97f6"><span class="section-number-2">1.</span> Structure</h2>
 <div class="outline-text-2" id="text-1">
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
@@ -412,8 +442,8 @@ hand-edit anything inside it.
 </p>
 </div>
 </div>
-<div id="outline-container-org5d5b0be" class="outline-2">
-<h2 id="org5d5b0be"><span class="section-number-2">2.</span> Customizations vs. the stock readtheorg theme</h2>
+<div id="outline-container-orga72070a" class="outline-2">
+<h2 id="orga72070a"><span class="section-number-2">2.</span> Customizations vs. the stock readtheorg theme</h2>
 <div class="outline-text-2" id="text-2">
 <ul class="org-ul">
 <li><b>Collapsible TOC sidebar</b>: a hamburger button toggles the left
@@ -429,8 +459,8 @@ light/dark.</li>
 </ul>
 </div>
 </div>
-<div id="outline-container-org26f520e" class="outline-2">
-<h2 id="org26f520e"><span class="section-number-2">3.</span> Usage</h2>
+<div id="outline-container-orgc41eb81" class="outline-2">
+<h2 id="orgc41eb81"><span class="section-number-2">3.</span> Usage</h2>
 <div class="outline-text-2" id="text-3">
 <ol class="org-ol">
 <li>Copy this folder to the new note's location.</li>
@@ -461,8 +491,8 @@ keep the <code>org-themes/</code> folder alongside it when exporting by hand.
 </p>
 </div>
 </div>
-<div id="outline-container-org680aecf" class="outline-2">
-<h2 id="org680aecf"><span class="section-number-2">4.</span> Deployment (Cloudflare Workers Git integration + GitHub SSO)</h2>
+<div id="outline-container-orgb0103e9" class="outline-2">
+<h2 id="orgb0103e9"><span class="section-number-2">4.</span> Deployment (Cloudflare Workers Git integration + GitHub SSO)</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 The Cloudflare dashboard's "Create a Worker" → "Import a repository" flow
@@ -487,8 +517,8 @@ commit. Every push to the connected branch (<code>main</code>) triggers a redepl
 of that content — no GitHub Actions workflow involved.
 </p>
 </div>
-<div id="outline-container-org3c72e4d" class="outline-3">
-<h3 id="org3c72e4d"><span class="section-number-3">4.1.</span> One-time Cloudflare setup</h3>
+<div id="outline-container-org75fb01f" class="outline-3">
+<h3 id="org75fb01f"><span class="section-number-3">4.1.</span> One-time Cloudflare setup</h3>
 <div class="outline-text-3" id="text-4-1">
 <ol class="org-ol">
 <li><b>Run the wizard</b> (Workers &amp; Pages → Create → Import a repository),
@@ -518,7 +548,7 @@ the site prompts a GitHub login and only approved accounts get through.
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Khoa Le</p>
-<p class="date">Created: 2026-08-30 Sun 19:02</p>
+<p class="date">Created: 2026-08-30 Sun 21:45</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

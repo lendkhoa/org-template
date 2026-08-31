@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2026-08-30 Sun 19:02 -->
+<!-- 2026-08-30 Sun 21:45 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Index</title>
@@ -203,11 +203,13 @@
 <script type="text/javascript" src="./org-themes/lib/js/svg-pan-zoom.min.js"></script>
 <link rel="stylesheet" href="./pagefind/pagefind-ui.css"/>
 <script src="./pagefind/pagefind-ui.js"></script>
+<script type="module" src="./pagefind/pagefind-highlight.js"></script>
 <style>
 #pagefind-search-trigger {
 position: fixed;
-bottom: 32px;
-left: 32px;
+bottom: 16px;
+right: 32px;
+left: unset;
 z-index: 9998;
 padding: 8px 14px;
 border-radius: 20px;
@@ -263,7 +265,29 @@ let initialized = false;
 function openSearch() {
 overlay.classList.add('open');
 if (!initialized) {
-new PagefindUI({ element: '#pagefind-search-mount', showSubResults: true });
+new PagefindUI({
+element: '#pagefind-search-mount',
+showSubResults: true,
+// No thumbnail images exist in this site's content; without this
+// Pagefind still renders an empty thumb box, showing up as a
+// blank gap in front of every result.
+showImages: false,
+// Press "/" anywhere on the page to jump straight into search,
+// matching the ⌘K shortcut (GitHub/YouTube-style convenience).
+focusOnSlash: true,
+// Carry the current query onto the destination page via
+// ?highlight=, so pagefind-highlight.js can mark it there.
+processResult: function (result) {
+const input = mount.querySelector('input');
+const term = input ? input.value.trim() : '';
+if (term && result.url) {
+const url = new URL(result.url, window.location.href);
+url.searchParams.set('highlight', term);
+result.url = url.pathname + url.search + url.hash;
+}
+return result;
+}
+});
 initialized = true;
 }
 const input = mount.querySelector('input');
@@ -285,6 +309,12 @@ overlay.classList.contains('open') ? closeSearch() : openSearch();
 closeSearch();
 }
 });
+
+// Highlight the term that was searched for once we land on this
+// page from a result link (see processResult above).
+if (window.PagefindHighlight) {
+new PagefindHighlight({ highlightParam: 'highlight' });
+}
 }
 window.addEventListener('load', addPagefindSearch);
 </script>
@@ -325,13 +355,13 @@ window.addEventListener('load', addDarkmodeWidget);
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#orgd026e6e">1. Index</a></li>
-<li><a href="#orgcdef307">2. Org cheatsheet</a></li>
+<li><a href="#org15673be">1. Index</a></li>
+<li><a href="#org314bf00">2. Org cheatsheet</a></li>
 </ul>
 </div>
 </div>
-<div id="outline-container-orgd026e6e" class="outline-2">
-<h2 id="orgd026e6e"><span class="section-number-2">1.</span> Index</h2>
+<div id="outline-container-org15673be" class="outline-2">
+<h2 id="org15673be"><span class="section-number-2">1.</span> Index</h2>
 <div class="outline-text-2" id="text-1">
 <ul class="org-ul">
 <li><a href="./README.html">README</a></li>
@@ -339,8 +369,8 @@ window.addEventListener('load', addDarkmodeWidget);
 </ul>
 </div>
 </div>
-<div id="outline-container-orgcdef307" class="outline-2">
-<h2 id="orgcdef307"><span class="section-number-2">2.</span> Org cheatsheet</h2>
+<div id="outline-container-org314bf00" class="outline-2">
+<h2 id="org314bf00"><span class="section-number-2">2.</span> Org cheatsheet</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 <b><b>Code block</b></b>
@@ -360,7 +390,7 @@ window.addEventListener('load', addDarkmodeWidget);
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Khoa Le</p>
-<p class="date">Created: 2026-08-30 Sun 19:02</p>
+<p class="date">Created: 2026-08-30 Sun 21:45</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
