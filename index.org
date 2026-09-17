@@ -4,8 +4,12 @@
 #+TITLE: Index
 
 * Index
-- [[./README.org][README]]
-- [[./template.org][Template]]
+Links to other pages in this site open as a new column to the right rather
+than replacing what you're reading. Follow a link from inside that column to
+stack a third alongside it.
+
+- [[./README.org][README]] -- what this template is and how to build it
+- [[./template.org][Template]] -- starter file for a new note
 
 * Org cheatsheet
 **Code block**

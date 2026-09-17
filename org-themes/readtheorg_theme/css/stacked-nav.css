@@ -1,0 +1,171 @@
+/*
+  Roam-style stacked navigation -- see stacked-nav.js.
+
+  Loaded after readtheorg.css, which it overrides: `#content` stops being a
+  single scrolling document column and becomes a fixed, horizontally
+  scrollable row of panes. The panes stay *inside* `#content` so every
+  `#content <descendant>` rule in readtheorg.css keeps applying to each
+  mounted page.
+*/
+
+#content.stack {
+    position: fixed;
+    top: 0;
+    left: 300px;
+    right: 0;
+    bottom: 0;
+    height: auto;
+    max-width: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: stretch;
+    overflow-x: auto;
+    overflow-y: hidden;
+    /* Shows through as the hairline gutter between panes. */
+    background: #edf0f2;
+    transition: left 0.25s ease;
+}
+
+body.sidebar-collapsed #content.stack {
+    left: 0;
+}
+
+/* Each pane is its own scroll container, so reading one column doesn't move
+   the others. */
+.stack-pane {
+    position: relative;
+    flex: 1 1 0;
+    /* Below this the panes stop shrinking and the stack scrolls sideways
+       instead, rather than squeezing code blocks into unreadable slivers. */
+    min-width: 20em;
+    display: flex;
+    flex-direction: column;
+    overflow-x: hidden;
+    overflow-y: auto;
+    background: #fcfcfc;
+    border-left: 1px solid #d9dde1;
+    scroll-snap-align: start;
+}
+
+.stack-pane:first-child {
+    border-left: none;
+}
+
+.stack-pane-bar {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    display: flex;
+    align-items: center;
+    flex: 0 0 auto;
+    min-height: 2.4em;
+    padding: 0 0.4em 0 1em;
+    background: #f3f5f7;
+    border-bottom: 1px solid #d9dde1;
+    font-size: 90%;
+    transition: background-color 0.15s ease;
+}
+
+/* #sidebar-toggle is fixed at the stack's left edge, so the leftmost pane's
+   bar has to start clear of it. */
+.stack-pane:first-child .stack-pane-bar {
+    padding-left: 3.2em;
+}
+
+.stack-pane-title {
+    flex: 1 1 auto;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-weight: bold;
+    color: #404040;
+}
+
+.stack-pane-close {
+    flex: 0 0 auto;
+    width: 1.7em;
+    height: 1.7em;
+    padding: 0;
+    border: none;
+    border-radius: 3px;
+    background: transparent;
+    color: #7f8c8d;
+    font-size: 1.3em;
+    line-height: 1;
+    cursor: pointer;
+}
+
+.stack-pane-close:hover {
+    background: #e0e4e8;
+    color: #c0392b;
+}
+
+/* The stack always keeps one page on screen, so the last pane has nothing
+   to offer a close button for. */
+.stack-pane:only-child .stack-pane-close {
+    display: none;
+}
+
+/* The focused pane wears the same blue as the sidebar header, since the
+   sidebar is showing that pane's table of contents. */
+.stack-pane-focused .stack-pane-bar {
+    background: #2980B9;
+    border-bottom-color: #2980B9;
+}
+
+.stack-pane-focused .stack-pane-title {
+    color: #fcfcfc;
+}
+
+.stack-pane-focused .stack-pane-close {
+    color: #d6eaf8;
+}
+
+.stack-pane-focused .stack-pane-close:hover {
+    background: #1f6698;
+    color: #fcfcfc;
+}
+
+/* Carries the padding #content used to have. The max-width keeps line
+   length readable when a single pane has the whole window to itself. */
+.stack-pane-body {
+    flex: 1 0 auto;
+    width: 100%;
+    max-width: 60em;
+    margin: 0 auto;
+    padding: 1.618em 2em 4em;
+}
+
+#table-of-contents.toc-empty #text-table-of-contents:after {
+    content: "No sections on this page.";
+    display: block;
+    padding: 0.809em 1.618em;
+    color: #8f8f8f;
+    font-size: 90%;
+    font-style: italic;
+}
+
+/* One pane at a time below the tablet breakpoint: panes fill the width and
+   the stack scroll-snaps, so open pages are a horizontal swipe apart. */
+@media screen and (max-width: 768px) {
+    #content.stack {
+        left: 0;
+        scroll-snap-type: x mandatory;
+    }
+
+    .stack-pane {
+        flex: 0 0 100%;
+        min-width: 0;
+    }
+
+    /* Every pane can sit under the toggle here, not just the first. */
+    .stack-pane-bar {
+        padding-left: 3.2em;
+    }
+
+    .stack-pane-body {
+        padding: 1.618em 1.2em 4em;
+    }
+}

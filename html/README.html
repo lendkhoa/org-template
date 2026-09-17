@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2026-08-30 Sun 21:45 -->
+<!-- 2026-09-16 Wed 22:05 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>org-template</title>
@@ -195,10 +195,12 @@
 </style>
 <link rel="stylesheet" type="text/css" href="./org-themes/readtheorg_theme/css/htmlize.css"/>
 <link rel="stylesheet" type="text/css" href="./org-themes/readtheorg_theme/css/readtheorg.css"/>
+<link rel="stylesheet" type="text/css" href="./org-themes/readtheorg_theme/css/stacked-nav.css"/>
 <script type="text/javascript" src="./org-themes/lib/js/jquery.min.js"></script>
 <script type="text/javascript" src="./org-themes/lib/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="./org-themes/lib/js/jquery.stickytableheaders.min.js"></script>
 <script type="text/javascript" src="./org-themes/readtheorg_theme/js/readtheorg.js"></script>
+<script type="text/javascript" src="./org-themes/readtheorg_theme/js/stacked-nav.js"></script>
 <script type="text/javascript" src="./org-themes/lib/js/mermaid.min.js"></script>
 <script type="text/javascript" src="./org-themes/lib/js/svg-pan-zoom.min.js"></script>
 <link rel="stylesheet" href="./pagefind/pagefind-ui.css"/>
@@ -355,14 +357,19 @@ window.addEventListener('load', addDarkmodeWidget);
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#orgd3e97f6">1. Structure</a></li>
-<li><a href="#orga72070a">2. Customizations vs. the stock readtheorg theme</a></li>
-<li><a href="#orgc41eb81">3. Usage</a></li>
-<li><a href="#orgb0103e9">4. Deployment (Cloudflare Workers Git integration + GitHub SSO)</a>
+<li><a href="#org7197eea">1. Structure</a></li>
+<li><a href="#orgbc889db">2. Customizations vs. the stock readtheorg theme</a></li>
+<li><a href="#org0d37239">3. Usage</a>
 <ul>
-<li><a href="#org75fb01f">4.1. One-time Cloudflare setup</a></li>
+<li><a href="#orgba66ea7">3.1. Viewing the export locally</a></li>
 </ul>
 </li>
+<li><a href="#org1476fea">4. Deployment (Cloudflare Workers Git integration + GitHub SSO)</a>
+<ul>
+<li><a href="#orged7c2cc">4.1. One-time Cloudflare setup</a></li>
+</ul>
+</li>
+<li><a href="#org7ac5fbe">5. Related pages</a></li>
 </ul>
 </div>
 </div>
@@ -371,8 +378,12 @@ Starter template for exporting Org-mode files to HTML with a customized
 readtheorg theme. Copy this folder wherever a new note needs styled HTML
 export.
 </p>
-<div id="outline-container-orgd3e97f6" class="outline-2">
-<h2 id="orgd3e97f6"><span class="section-number-2">1.</span> Structure</h2>
+
+<p>
+Related pages: <a href="./index.html">Index</a> | <a href="./template.html">Template</a>
+</p>
+<div id="outline-container-org7197eea" class="outline-2">
+<h2 id="org7197eea"><span class="section-number-2">1.</span> Structure</h2>
 <div class="outline-text-2" id="text-1">
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
@@ -406,12 +417,12 @@ export.
 
 <tr>
 <td class="org-left"><code>org-themes/readtheorg_theme/css/</code></td>
-<td class="org-left"><code>htmlize.css</code> (syntax colors), <code>readtheorg.css</code> (layout)</td>
+<td class="org-left"><code>htmlize.css</code> (syntax colors), <code>readtheorg.css</code> (layout), <code>stacked-nav.css</code> (pane columns)</td>
 </tr>
 
 <tr>
 <td class="org-left"><code>org-themes/readtheorg_theme/js/</code></td>
-<td class="org-left"><code>readtheorg.js</code> (TOC behavior)</td>
+<td class="org-left"><code>readtheorg.js</code> (sidebar + per-page content passes), <code>stacked-nav.js</code> (stacked navigation)</td>
 </tr>
 
 <tr>
@@ -442,10 +453,29 @@ hand-edit anything inside it.
 </p>
 </div>
 </div>
-<div id="outline-container-orga72070a" class="outline-2">
-<h2 id="orga72070a"><span class="section-number-2">2.</span> Customizations vs. the stock readtheorg theme</h2>
+<div id="outline-container-orgbc889db" class="outline-2">
+<h2 id="orgbc889db"><span class="section-number-2">2.</span> Customizations vs. the stock readtheorg theme</h2>
 <div class="outline-text-2" id="text-2">
 <ul class="org-ul">
+<li><p>
+<b>Roam-style stacked navigation</b>: following a link to another page in this
+site opens it as a new column to the right instead of replacing the page,
+so you keep the page you came from in view. At most three columns are open
+at once &#x2013; opening a fourth drops the leftmost &#x2013; and each column has a
+close button in its title bar. The left sidebar always shows the table of
+contents of whichever column has focus, and the open set is mirrored into
+the URL as <code>?stack=a.html,b.html</code>, so reloading or sharing that link
+restores the same columns and Back pops one off. Below 768px the columns
+become full-width and scroll-snap, so open pages are one swipe apart
+(<code>stacked-nav.js</code> / <code>stacked-nav.css</code>).
+</p>
+
+<p>
+This needs the site to be <b>served over http(s)</b>, because mounting a page
+into a column fetches it and browsers refuse <code>fetch()</code> on <code>file://</code> URLs.
+Opened straight off disk the theme notices and stays out of the way: one
+page at a time, links navigating normally. See <a href="#orgba66ea7">Viewing the export locally</a>.
+</p></li>
 <li><b>Collapsible TOC sidebar</b>: a hamburger button toggles the left
 table-of-contents; state persists per-browser via <code>localStorage</code>
 (<code>readtheorg.css</code> / <code>readtheorg.js</code>).</li>
@@ -459,8 +489,8 @@ light/dark.</li>
 </ul>
 </div>
 </div>
-<div id="outline-container-orgc41eb81" class="outline-2">
-<h2 id="orgc41eb81"><span class="section-number-2">3.</span> Usage</h2>
+<div id="outline-container-org0d37239" class="outline-2">
+<h2 id="org0d37239"><span class="section-number-2">3.</span> Usage</h2>
 <div class="outline-text-2" id="text-3">
 <ol class="org-ol">
 <li>Copy this folder to the new note's location.</li>
@@ -484,6 +514,25 @@ the shell:
 runs <code>make export</code> and stages <code>html/</code> automatically — no more forgetting
 to regenerate it before pushing.</li>
 </ol>
+</div>
+<div id="outline-container-orgba66ea7" class="outline-3">
+<h3 id="orgba66ea7"><span class="section-number-3">3.1.</span> Viewing the export locally</h3>
+<div class="outline-text-3" id="text-3-1">
+<p>
+Double-clicking <code>html/index.html</code> opens it over <code>file://</code>, where the
+stacked-column navigation is switched off (see above) — everything else
+works, but links replace the page instead of opening a column beside it. To
+see the site as it deploys, serve the directory over http:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh"><span class="org-builtin">cd</span> html &amp;&amp; python3 -m http.server 8000
+</pre>
+</div>
+
+<p>
+then open <code>http://localhost:8000/</code>.
+</p>
 
 <p>
 All paths in <code>theme-readtheorg.setup</code> are relative to the <code>.org</code> file, so
@@ -491,8 +540,9 @@ keep the <code>org-themes/</code> folder alongside it when exporting by hand.
 </p>
 </div>
 </div>
-<div id="outline-container-orgb0103e9" class="outline-2">
-<h2 id="orgb0103e9"><span class="section-number-2">4.</span> Deployment (Cloudflare Workers Git integration + GitHub SSO)</h2>
+</div>
+<div id="outline-container-org1476fea" class="outline-2">
+<h2 id="org1476fea"><span class="section-number-2">4.</span> Deployment (Cloudflare Workers Git integration + GitHub SSO)</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 The Cloudflare dashboard's "Create a Worker" → "Import a repository" flow
@@ -517,8 +567,8 @@ commit. Every push to the connected branch (<code>main</code>) triggers a redepl
 of that content — no GitHub Actions workflow involved.
 </p>
 </div>
-<div id="outline-container-org75fb01f" class="outline-3">
-<h3 id="org75fb01f"><span class="section-number-3">4.1.</span> One-time Cloudflare setup</h3>
+<div id="outline-container-orged7c2cc" class="outline-3">
+<h3 id="orged7c2cc"><span class="section-number-3">4.1.</span> One-time Cloudflare setup</h3>
 <div class="outline-text-3" id="text-4-1">
 <ol class="org-ol">
 <li><b>Run the wizard</b> (Workers &amp; Pages → Create → Import a repository),
@@ -545,10 +595,19 @@ the site prompts a GitHub login and only approved accounts get through.
 </div>
 </div>
 </div>
+<div id="outline-container-org7ac5fbe" class="outline-2">
+<h2 id="org7ac5fbe"><span class="section-number-2">5.</span> Related pages</h2>
+<div class="outline-text-2" id="text-5">
+<ul class="org-ul">
+<li><a href="./index.html">Index</a></li>
+<li><a href="./template.html">Template</a></li>
+</ul>
+</div>
+</div>
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Khoa Le</p>
-<p class="date">Created: 2026-08-30 Sun 21:45</p>
+<p class="date">Created: 2026-09-16 Wed 22:05</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

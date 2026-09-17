@@ -7,6 +7,8 @@ Starter template for exporting Org-mode files to HTML with a customized
 readtheorg theme. Copy this folder wherever a new note needs styled HTML
 export.
 
+Related pages: [[./index.org][Index]] | [[./template.org][Template]]
+
 * Structure
 
 | Path                                        | Purpose                                             |
@@ -14,8 +16,8 @@ export.
 | =template.org=                              | Starter file: standard preamble + SETUPFILE include |
 | =theme-readtheorg.setup=                    | HTML_HEAD include: wires up all CSS/JS below        |
 | =org-themes/lib/js/=                        | jquery, bootstrap, stickytableheaders (theme deps)  |
-| =org-themes/readtheorg_theme/css/=          | =htmlize.css= (syntax colors), =readtheorg.css= (layout) |
-| =org-themes/readtheorg_theme/js/=           | =readtheorg.js= (TOC behavior)                       |
+| =org-themes/readtheorg_theme/css/=          | =htmlize.css= (syntax colors), =readtheorg.css= (layout), =stacked-nav.css= (pane columns) |
+| =org-themes/readtheorg_theme/js/=           | =readtheorg.js= (sidebar + per-page content passes), =stacked-nav.js= (stacked navigation) |
 | =Makefile=                                  | =make export= builds all =.org= files into =html/=  |
 | =githooks/pre-commit=                       | Runs =make export= and stages =html/= before every commit; enable with =make install-hooks= |
 | =html/=                                     | Generated output: exported HTML + a copy of =org-themes/= alongside it |
@@ -26,6 +28,21 @@ hand-edit anything inside it.
 
 * Customizations vs. the stock readtheorg theme
 
+- *Roam-style stacked navigation*: following a link to another page in this
+  site opens it as a new column to the right instead of replacing the page,
+  so you keep the page you came from in view. At most three columns are open
+  at once -- opening a fourth drops the leftmost -- and each column has a
+  close button in its title bar. The left sidebar always shows the table of
+  contents of whichever column has focus, and the open set is mirrored into
+  the URL as =?stack=a.html,b.html=, so reloading or sharing that link
+  restores the same columns and Back pops one off. Below 768px the columns
+  become full-width and scroll-snap, so open pages are one swipe apart
+  (=stacked-nav.js= / =stacked-nav.css=).
+
+  This needs the site to be *served over http(s)*, because mounting a page
+  into a column fetches it and browsers refuse =fetch()= on =file://= URLs.
+  Opened straight off disk the theme notices and stays out of the way: one
+  page at a time, links navigating normally. See [[*Viewing the export locally][Viewing the export locally]].
 - *Collapsible TOC sidebar*: a hamburger button toggles the left
   table-of-contents; state persists per-browser via =localStorage=
   (=readtheorg.css= / =readtheorg.js=).
@@ -54,6 +71,19 @@ hand-edit anything inside it.
 4. Optional: =make install-hooks= points git at =githooks/=, so every commit
    runs =make export= and stages =html/= automatically — no more forgetting
    to regenerate it before pushing.
+
+** Viewing the export locally
+
+Double-clicking =html/index.html= opens it over =file://=, where the
+stacked-column navigation is switched off (see above) — everything else
+works, but links replace the page instead of opening a column beside it. To
+see the site as it deploys, serve the directory over http:
+
+#+begin_src sh
+  cd html && python3 -m http.server 8000
+#+end_src
+
+then open =http://localhost:8000/=.
 
 All paths in =theme-readtheorg.setup= are relative to the =.org= file, so
 keep the =org-themes/= folder alongside it when exporting by hand.
@@ -97,3 +127,8 @@ of that content — no GitHub Actions workflow involved.
 
 Once configured, every push to =main= redeploys automatically; visiting
 the site prompts a GitHub login and only approved accounts get through.
+
+* Related pages
+
+- [[./index.org][Index]]
+- [[./template.org][Template]]

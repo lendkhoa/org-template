@@ -41,3 +41,8 @@ Start writing here.
     style API fill:#ede9fe,stroke:#7c3aed,color:#3b0764
     style ERP fill:#fef9c3,stroke:#ca8a04,color:#713f12
 #+end_src
+
+* Related pages
+
+- [[./index.org][Index]]
+- [[./README.org][README]]

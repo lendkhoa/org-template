@@ -337,9 +337,11 @@ code{
 
 .copy-code-btn{
     position:absolute;
-    top:50%;
+    /* Pinned to the top corner rather than vertically centred: in a narrow
+       stacked pane the code wraps to many lines, and a centred button lands
+       in the middle of them. */
+    top:8px;
     right:8px;
-    transform:translateY(-50%);
     z-index:1;
     background:rgba(255,255,255,0.08);
     border:1px solid #3e3d32;
@@ -626,6 +628,25 @@ body.sidebar-collapsed #sidebar-toggle {
    page scrolls underneath it instead of burying it. */
 .darkmode-toggle {
     z-index:500;
+}
+
+/* The dark-mode effect is a fixed overlay with `mix-blend-mode: difference`,
+   which only inverts what paints *below* it. darkmode-js inserts that layer
+   as body's first child and gives it no z-index, so it used to rely on
+   #content being unpositioned -- in-flow content always paints below the
+   positioned layer. #content is now `position: fixed` for the pane stack
+   (stacked-nav.css), which promotes it into the positioned layer, where
+   tree order decides: being inserted first, the layer would paint behind
+   the panes and the page would stop inverting entirely.
+
+   An explicit z-index restores the original stacking. Because #content.stack
+   is `position: fixed` it forms a stacking context, so this single value
+   covers every pane and sticky pane bar inside it. It stays below the
+   sidebar (200), its toggle (250), the postamble (400) and the dark-mode
+   button (500), all of which were painted above the layer -- and therefore
+   left un-inverted -- before the stacked-nav change too. */
+.darkmode-layer {
+    z-index:100;
 }
 
 @media screen and (max-width: 768px) {

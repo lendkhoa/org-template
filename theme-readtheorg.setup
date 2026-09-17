@@ -2,11 +2,13 @@
 
 #+HTML_HEAD: <link rel="stylesheet" type="text/css" href="./org-themes/readtheorg_theme/css/htmlize.css"/>
 #+HTML_HEAD: <link rel="stylesheet" type="text/css" href="./org-themes/readtheorg_theme/css/readtheorg.css"/>
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="./org-themes/readtheorg_theme/css/stacked-nav.css"/>
 
 #+HTML_HEAD: <script type="text/javascript" src="./org-themes/lib/js/jquery.min.js"></script>
 #+HTML_HEAD: <script type="text/javascript" src="./org-themes/lib/js/bootstrap.min.js"></script>
 #+HTML_HEAD: <script type="text/javascript" src="./org-themes/lib/js/jquery.stickytableheaders.min.js"></script>
 #+HTML_HEAD: <script type="text/javascript" src="./org-themes/readtheorg_theme/js/readtheorg.js"></script>
+#+HTML_HEAD: <script type="text/javascript" src="./org-themes/readtheorg_theme/js/stacked-nav.js"></script>
 #+HTML_HEAD: <script type="text/javascript" src="./org-themes/lib/js/mermaid.min.js"></script>
 #+HTML_HEAD: <script type="text/javascript" src="./org-themes/lib/js/svg-pan-zoom.min.js"></script>
 
